@@ -4,28 +4,22 @@
   </p>
 
 
-  <table class="table is-fullwidth">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Delete</th>
-    </tr>
-    </thead>
-    <tbody>
+  <ul class="StackedList StackedList--hasScroll mb-6">
     <% @recipe.recipe_ingredients.each do |recipe_ingredient| %>
-      <tr class="block">
-        <td><%= recipe_ingredient.ingredient.name %></td>
-        <td><%= recipe_ingredient.quantity %> <%= recipe_ingredient.unit %></td>
-        <td><button class="button is-danger">
-          <span class="icon is-small">
-            <i class="fas fa-trash"></i>
-          </span>
-        </button></td>
-      </tr>
+      <li class="card StackedListItem StackedListItem--isDraggable mb-2" draggable="true" data-id="<%= recipe_ingredient.id %>">
+        <div class="card-content">
+          <button class="delete is-large is-pulled-right"></button>
+          <p class="title is-size-5">
+            <%= recipe_ingredient.ingredient.name %>
+          </p>
+          <p class="subtitle">
+            <%= recipe_ingredient.quantity %> <%= recipe_ingredient.unit %>
+          </p>
+        </div>
+      </li>
     <% end %>
-    </tbody>
-  </table>
+  </ul>
+
 
   <%= render 'form' %>
 </div>

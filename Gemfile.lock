@@ -102,6 +102,7 @@ GEM
       faraday-net_http (~> 2.0)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (2.0.3)
+    foreman (0.87.2)
     globalid (1.0.0)
       activesupport (>= 5.0)
     hashie (5.0.0)
@@ -116,6 +117,8 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    jsbundling-rails (1.0.2)
+      railties (>= 6.0.0)
     jwt (2.3.0)
     loofah (2.18.0)
       crass (~> 1.0.2)
@@ -266,8 +269,10 @@ DEPENDENCIES
   cssbundling-rails (~> 1.1)
   debug
   devise
+  foreman
   importmap-rails
   jbuilder
+  jsbundling-rails (~> 1.0)
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
   pg

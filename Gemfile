@@ -60,6 +60,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman', require: false
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
@@ -78,3 +79,5 @@ group :test do
 end
 
 gem "cssbundling-rails", "~> 1.1"
+
+gem "jsbundling-rails", "~> 1.0"
