@@ -35,11 +35,10 @@
       <div class="navbar-item">
         <div class="buttons">
           <% if user_signed_in? %>
-            <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "button is-primary is-outlined" %>
+            <%= link_to "Log out", destroy_user_session_path, class: "button is-primary is-outlined", data: { turbo_method: :delete } %>
             <% else %>
-            <a class="button is-primary">
-              <strong>Sign in</strong>
-            </a>
+
+            <%= button_to "Sign in", user_google_oauth2_omniauth_authorize_path, :data => {turbo: "false"}, class: "button is-primary" %>
           <% end %>
         </div>
       </div>
