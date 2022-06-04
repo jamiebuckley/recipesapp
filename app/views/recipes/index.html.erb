@@ -1,49 +1,74 @@
-<div class="container">
-  <div class="control has-icons-left has-icons-right">
-    <input class="input is-small" type="email" placeholder="Email">
-    <span class="icon is-small is-left">
-    <i class="fas fa-envelope"></i>
-  </span>
-    <span class="icon is-small is-right">
-    <i class="fas fa-check"></i>
-  </span>
+<div class="container p-1">
+  <div class="field has-addons is-hidden-touch">
+    <div class="control has-icons-left is-expanded">
+      <input class="input is-fullwidth is-large" type="text">
+      <span class="icon is-left">
+        <i class="fas fa-search"></i>
+      </span>
+    </div>
+    <div class="control">
+      <a class="button is-primary is-large">
+        Search
+      </a>
+    </div>
   </div>
 
+  <div class="field has-addons is-hidden-desktop">
+    <div class="control has-icons-left is-expanded">
+      <input class="input is-fullwidth" type="text">
+      <span class="icon is-left">
+        <i class="fas fa-search"></i>
+      </span>
+    </div>
+    <div class="control">
+      <a class="button is-primary">
+        Search
+      </a>
+    </div>
+  </div>
+
+
   <div class="columns">
-    <div class="column is-4">
-      <div class="card">
-        <div class="card-content">
-          <p class="title">
-            Beef thingy
-          </p>
-          <p class="subtitle">
-            May 21st 2022
-          </p>
-        </div>
-        <div class="card-image">
-          <figure class="image is-4by3">
-            <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-          </figure>
-        </div>
-        <div class="card-content">
-        <div class="tags">
-          <span class="tag">Asian</span>
-          <span class="tag">Quick</span>
-        </div>
-        </div>
-        <footer class="card-footer">
-          <p class="card-footer-item">
+    <% @user_recipes.each do |recipe| %>
+      <div class="column is-one-third-desktop">
+        <div class="card">
+          <div class="card-content">
+            <p class="title">
+              <%= recipe.name %>
+            </p>
+            <p class="subtitle">
+              <%= recipe.updated_at.strftime("%B %d, %Y") %>
+            </p>
+          </div>
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="tags">
+              <span class="tag">Asian</span>
+              <span class="tag">Quick</span>
+            </div>
+          </div>
+          <footer class="card-footer">
+            <p class="card-footer-item">
             <span>
               View/Edit
             </span>
-          </p>
-          <p class="card-footer-item">
+            </p>
+            <p class="card-footer-item">
             <span>
               Add to list
             </span>
-          </p>
-        </footer>
+            </p>
+          </footer>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
+
+  <a href="<%= new_recipe_path %>" class="button is-floating is-primary">
+    <i class="fas fa-add"></i>
+  </a>
 </div>
