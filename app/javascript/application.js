@@ -2,7 +2,7 @@
 import "@hotwired/turbo-rails"
 import {Sortable} from '@shopify/draggable';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("turbo:load", () => {
     const containerSelectorMirror = '.StackedListMirror';
     const containerSelector = '.StackedList';
     const containers = document.querySelectorAll(containerSelector);
