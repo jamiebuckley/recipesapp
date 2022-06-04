@@ -1,0 +1,27 @@
+<div class="container p-2">
+  <p class="title">
+    <%= @recipe.name %> Recipe
+    <%= link_to "Edit Name", edit_recipe_path(@recipe), class: "ml-4 is-size-6" %>
+  </p>
+  <hr/>
+  <p class="title is-size-5">
+  Ingredients
+  <%= link_to "Edit Ingredients", recipe_ingredients_path(@recipe), class: "ml-4 is-size-6" %>
+  </p>
+  <table class="table is-fullwidth">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @recipe.recipe_ingredients.each do |recipe_ingredient| %>
+      <tr class="block">
+        <td><%= recipe_ingredient.ingredient.name %></td>
+        <td><%= recipe_ingredient.quantity %> <%= recipe_ingredient.unit %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

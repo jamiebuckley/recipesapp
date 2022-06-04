@@ -1,4 +1,4 @@
-<div class="container p-1">
+<div class="container p-2">
   <div class="field has-addons is-hidden-touch">
     <div class="control has-icons-left is-expanded">
       <input class="input is-fullwidth is-large" type="text">
@@ -14,8 +14,8 @@
   </div>
 
   <div class="field has-addons is-hidden-desktop">
-    <div class="control has-icons-left is-expanded">
-      <input class="input is-fullwidth" type="text">
+    <div class="control has-icons-left">
+      <input class="input" type="text">
       <span class="icon is-left">
         <i class="fas fa-search"></i>
       </span>
@@ -28,7 +28,7 @@
   </div>
 
 
-  <div class="columns">
+  <div class="columns is-multiline">
     <% @user_recipes.each do |recipe| %>
       <div class="column is-one-third-desktop">
         <div class="card">
@@ -52,11 +52,9 @@
             </div>
           </div>
           <footer class="card-footer">
-            <p class="card-footer-item">
-            <span>
-              View/Edit
-            </span>
-            </p>
+            <a href="<%= recipe_path(id: recipe.id) %>" class="card-footer-item">
+              View
+            </a>
             <p class="card-footer-item">
             <span>
               Add to list

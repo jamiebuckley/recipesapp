@@ -1,0 +1,31 @@
+<div class="container p-2">
+  <p class="title">
+    <%= @recipe.name %> Recipe Ingredients
+  </p>
+
+
+  <table class="table is-fullwidth">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @recipe.recipe_ingredients.each do |recipe_ingredient| %>
+      <tr class="block">
+        <td><%= recipe_ingredient.ingredient.name %></td>
+        <td><%= recipe_ingredient.quantity %> <%= recipe_ingredient.unit %></td>
+        <td><button class="button is-danger">
+          <span class="icon is-small">
+            <i class="fas fa-trash"></i>
+          </span>
+        </button></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= render 'form' %>
+</div>

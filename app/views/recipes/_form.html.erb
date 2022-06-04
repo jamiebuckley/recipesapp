@@ -1,0 +1,15 @@
+<%= form_for(@recipe) do |f| %>
+  <div class="field mb-6">
+    <div class="control">
+      <%= f.text_field :name, class: "input is-large #{'is-danger' if @recipe.errors.key?("name")}", placeholder: "Enter Recipe Title" %>
+    </div>
+
+    <% if @recipe.errors.key?("name") %>
+      <% @recipe.errors.full_messages_for(:name).each do |error| %>
+        <p class="help is-danger"><%= error %></p>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= f.submit "Save and continue", class: "button is-primary is-pulled-right is-large" %>
+<% end %>

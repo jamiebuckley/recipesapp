@@ -1,0 +1,32 @@
+<%= form_for(@recipe_ingredient) do |f| %>
+
+  <%= f.fields_for @recipe_ingredient.ingredient do |ingredient_fields| %>
+  <div class="field mb-4">
+    <div class="control">
+      <%= ingredient_fields.text_field :name, class: "input is-large #{'is-danger' if @recipe_ingredient.ingredient.errors.key?("name")}", placeholder: "Ingredient Name" %>
+    </div>
+
+    <% if @recipe_ingredient.ingredient.errors.key?("name") %>
+      <% @recipe_ingredient.ingredient.errors.full_messages_for(:name).each do |error| %>
+        <p class="help is-danger"><%= error %></p>
+      <% end %>
+    <% end %>
+  </div>
+  <% end %>
+
+  <div class="field has-addons  flex-wrap">
+    <div class="control is-expanded">
+      <%= f.number_field :quantity, class: "input is-large #{'is-danger' if @recipe_ingredient.errors.key?("quantity")}", placeholder: "Quantity" %>
+    </div>
+    <div class="control">
+      <%= f.select :unit, options_for_select(@unit_options), {}, { class: "input is-large #{'is-danger' if @recipe_ingredient.errors.key?("quantity")}" } %>
+    </div>
+  </div>
+  <% if @recipe_ingredient.errors.key?("quantity") %>
+    <% @recipe_ingredient.errors.full_messages_for(:quantity).each do |error| %>
+      <p class="help is-danger  w-100"><%= error %></p>
+    <% end %>
+  <% end %>
+
+  <%= f.submit "Add Ingredient", class: "button is-primary is-pulled-right is-large" %>
+<% end %>
