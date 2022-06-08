@@ -4,4 +4,6 @@ class RecipeIngredient < ApplicationRecord
 
   validates :quantity, presence: true
   validates :unit, presence: true
+
+  acts_as_list scope: :recipe
 end

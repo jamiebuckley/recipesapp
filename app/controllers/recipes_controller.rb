@@ -21,7 +21,7 @@ class RecipesController < ApplicationController
 
   def show
     @recipe = Recipe.where(id: params[:id], user_id: current_user.id)
-                    .left_joins(:recipe_ingredients => :ingredient)
+                    .left_joins(:recipe_ingredients => :ingredient).order(position: :desc)
                     .first
   end
 

@@ -4,11 +4,11 @@
   </p>
 
 
-  <ul class="StackedList StackedList--hasScroll mb-6">
+  <ul class="mb-6" data-controller="sortable" data-sortable-animation-value="150" data-sortable-resource-name-value="recipe_ingredient">
     <% @recipe.recipe_ingredients.each do |recipe_ingredient| %>
-      <li class="card StackedListItem StackedListItem--isDraggable mb-2" draggable="true" data-id="<%= recipe_ingredient.id %>">
+      <li class="card mb-2" data-id="<%= recipe_ingredient.id %>" data-sortable-update-url="<%= recipe_ingredient_path(@recipe.id, recipe_ingredient.id) %>">
         <div class="card-content">
-          <button class="delete is-large is-pulled-right"></button>
+          <%= button_to "Delete", recipe_ingredient_path(@recipe, recipe_ingredient), method: :delete, class: "delete is-large is-pulled-right"%>
           <p class="title is-size-5">
             <%= recipe_ingredient.ingredient.name %>
           </p>

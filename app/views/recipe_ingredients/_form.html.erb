@@ -3,7 +3,7 @@
   <%= f.fields_for @recipe_ingredient.ingredient do |ingredient_fields| %>
   <div class="field mb-4">
     <div class="control">
-      <%= ingredient_fields.text_field :name, class: "input is-large #{'is-danger' if @recipe_ingredient.ingredient.errors.key?("name")}", placeholder: "Ingredient Name" %>
+      <%= ingredient_fields.text_field :name, class: "input is-large #{'is-danger' if @recipe_ingredient.ingredient.errors.key?("name")}", placeholder: "Ingredient Name", autocomplete: "off" %>
     </div>
 
     <% if @recipe_ingredient.ingredient.errors.key?("name") %>
@@ -14,7 +14,7 @@
   </div>
   <% end %>
 
-  <div class="field has-addons  flex-wrap">
+  <div class="field has-addons flex-wrap">
     <div class="control is-expanded">
       <%= f.number_field :quantity, class: "input is-large #{'is-danger' if @recipe_ingredient.errors.key?("quantity")}", placeholder: "Quantity" %>
     </div>
