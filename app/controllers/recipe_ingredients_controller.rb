@@ -17,8 +17,8 @@ class RecipeIngredientsController < ApplicationController
 
     permitted  = params.require(:recipe_ingredient).permit(:quantity, :unit, :ingredient => :name)
     @recipe_ingredient = RecipeIngredient.new(recipe_id: params[:recipe_id], quantity: permitted[:quantity], unit: permitted[:unit])
-    @recipe_ingredient.ingredient = Ingredient.new(name: params[:recipe_ingredient][:ingredient][:name])
 
+    @recipe_ingredient.ingredient = Ingredient.where(:name => params[:recipe_ingredient][:ingredient][:name]).first_or_create
     @recipe_ingredient.valid?
     @recipe_ingredient.ingredient.valid?
 
