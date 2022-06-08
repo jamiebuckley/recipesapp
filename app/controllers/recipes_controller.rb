@@ -13,7 +13,7 @@ class RecipesController < ApplicationController
     @recipe = Recipe.new(permitted)
     @recipe.user_id = current_user.id
     if @recipe.save
-      redirect_to recipe_ingredients_path(id: @recipe.id)
+      redirect_to recipe_ingredients_path(recipe_id: @recipe.id)
     else
       render :new, status: 422
     end

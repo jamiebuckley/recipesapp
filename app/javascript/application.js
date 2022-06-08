@@ -23,8 +23,8 @@ const wireUpHamburgerMenu = () => {
 }
 
 const pageStartController = () => {
-    document.removeEventListener("DOMContentLoaded", pageStartController)
+    document.removeEventListener("turbo:load", pageStartController)
     wireUpHamburgerMenu();
 }
 
-document.addEventListener("DOMContentLoaded", pageStartController)
+document.addEventListener("turbo:load", pageStartController)
