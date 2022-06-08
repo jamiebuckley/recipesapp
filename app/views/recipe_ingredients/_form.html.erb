@@ -1,7 +1,7 @@
 <%= form_for(@recipe_ingredient) do |f| %>
 
   <%= f.fields_for @recipe_ingredient.ingredient do |ingredient_fields| %>
-  <div class="field mb-4">
+  <div class="field mb-4" id="static_ingredient">
     <div class="control">
       <%= ingredient_fields.text_field :name, class: "input is-large #{'is-danger' if @recipe_ingredient.ingredient.errors.key?("name")}", placeholder: "Ingredient Name", autocomplete: "off" %>
     </div>
@@ -13,6 +13,10 @@
     <% end %>
   </div>
   <% end %>
+
+  <div id="autocomplete">
+
+  </div>
 
   <div class="field has-addons flex-wrap">
     <div class="control is-expanded">
