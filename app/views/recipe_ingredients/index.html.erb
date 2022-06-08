@@ -4,17 +4,25 @@
   </p>
 
 
-  <ul class="mb-6" data-controller="sortable" data-sortable-animation-value="150" data-sortable-resource-name-value="recipe_ingredient">
+  <ul class="mb-6 ml-6 mr-6" data-controller="sortable" data-sortable-animation-value="150"
+      data-sortable-resource-name-value="recipe_ingredient"
+      data-sortable-handle-value=".handle">
     <% @recipe.recipe_ingredients.each do |recipe_ingredient| %>
       <li class="card mb-2" data-id="<%= recipe_ingredient.id %>" data-sortable-update-url="<%= recipe_ingredient_path(@recipe.id, recipe_ingredient.id) %>">
         <div class="card-content">
-          <%= button_to "Delete", recipe_ingredient_path(@recipe, recipe_ingredient), method: :delete, class: "delete is-large is-pulled-right"%>
-          <p class="title is-size-5">
-            <%= recipe_ingredient.ingredient.name %>
-          </p>
-          <p class="subtitle">
-            <%= recipe_ingredient.quantity %> <%= recipe_ingredient.unit %>
-          </p>
+          <div class="columns is-mobile">
+            <div class="column handle">
+              <p class="title is-size-5">
+                <%= recipe_ingredient.ingredient.name %>
+              </p>
+              <p class="subtitle">
+                <%= recipe_ingredient.quantity %> <%= recipe_ingredient.unit %>
+              </p>
+            </div>
+            <div class="column is-one-quarter">
+              <%= button_to "Delete", recipe_ingredient_path(@recipe, recipe_ingredient), method: :delete, class: "delete is-large is-pulled-right"%>
+            </div>
+          </div>
         </div>
       </li>
     <% end %>

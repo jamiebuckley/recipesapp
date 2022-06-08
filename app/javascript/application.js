@@ -23,7 +23,6 @@ const wireUpHamburgerMenu = () => {
 }
 
 const pageStartController = () => {
-    document.removeEventListener("turbo:load", pageStartController)
     wireUpHamburgerMenu();
 }
 
