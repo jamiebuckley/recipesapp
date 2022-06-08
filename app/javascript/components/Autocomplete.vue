@@ -1,4 +1,18 @@
 <script>
+function debounce(func, timeout = 800){
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
+
+const processInput = debounce((newVal, callback) => {
+  fetch(`/ingredients/${newVal}`)
+      .then(results => results.json())
+      .then(callback)
+})
+
 export default {
   data() {
     return {
@@ -23,8 +37,7 @@ export default {
         this.searchResults = [];
         return
       } else {
-        fetch(`/ingredients/${newVal}`).then(results => results.json())
-            .then(results => this.searchResults = results)
+        processInput(newVal, results => this.searchResults = results);
       }
     }
   }
