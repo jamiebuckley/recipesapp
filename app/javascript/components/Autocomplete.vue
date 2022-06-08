@@ -33,7 +33,7 @@ export default {
 
 <template>
   <div v-bind:class = "(isFocused)?'fullpage':''">
-   <input class="input is-large" placeholder="Ingredient Name" @click="isFocused=true" v-model="searchTerm"/>
+   <input class="input is-large" placeholder="Ingredient Name" @click="isFocused=true" :value="this.searchTerm" @input="this.searchTerm = $event.target.value"/>
 
     <div v-if="isFocused">
       <div v-for="ingredient in searchResults" class="searchItem is-size-3" @click="this.selected(ingredient)">
