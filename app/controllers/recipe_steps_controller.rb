@@ -13,7 +13,7 @@ class RecipeStepsController < ApplicationController
     set_values(params[:recipe_id])
 
     permitted  = params.require(:recipe_step).permit(:instructions)
-    @new_recipe_step = RecipeStep.new(recipe_id: params[:recipe_id], instructions: permitted[:instructions])
+    @new_recipe_step = RecipeStep.new(recipe_id: params[:recipe_id], instructions: permitted[:instructions], user_id: current_user.id)
 
     if @new_recipe_step.valid? && @new_recipe_step.save
       redirect_to recipe_steps_path(params[:recipe_id])
