@@ -1,31 +1,35 @@
+<%= form_for(recipes_path, method: :get) do |form| %>
 <div class="container p-2">
   <div class="field has-addons is-hidden-touch">
     <div class="control has-icons-left is-expanded">
-      <input class="input is-fullwidth is-large" type="text">
+      <input class="input is-fullwidth is-large" type="text" name="search" value="<%= @search_term %>">
       <span class="icon is-left">
         <i class="fas fa-search"></i>
       </span>
     </div>
     <div class="control">
-      <a class="button is-primary is-large">
+      <button class="button is-primary is-large">
         Search
-      </a>
+      </button>
     </div>
   </div>
+<% end %>
 
-  <div class="field has-addons is-hidden-desktop">
-    <div class="control has-icons-left">
-      <input class="input" type="text">
-      <span class="icon is-left">
-        <i class="fas fa-search"></i>
-      </span>
+  <%= form_for(recipes_path, method: :get) do |form| %>
+    <div class="field has-addons is-hidden-desktop">
+      <div class="control has-icons-left">
+        <input class="input" type="text" name="search"  value="<%= @search_term %>">
+        <span class="icon is-left">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+      <div class="control">
+        <button class="button is-primary">
+          Search
+        </button>
+      </div>
     </div>
-    <div class="control">
-      <a class="button is-primary">
-        Search
-      </a>
-    </div>
-  </div>
+  <% end %>
 
 
   <div class="columns is-multiline">

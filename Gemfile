@@ -35,6 +35,8 @@ gem "omniauth-rails_csrf_protection"
 
 gem 'acts_as_list'
 
+gem 'pg_search', '~> 2.3', '>= 2.3.6'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

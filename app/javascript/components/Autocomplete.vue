@@ -1,5 +1,5 @@
 <script>
-function debounce(func, timeout = 800){
+function debounce(func, timeout = 500){
   let timer;
   return (...args) => {
     clearTimeout(timer);
@@ -8,7 +8,7 @@ function debounce(func, timeout = 800){
 }
 
 const processInput = debounce((newVal, callback) => {
-  fetch(`/ingredients/${newVal}`)
+  fetch(`/ingredients/search/${newVal}`)
       .then(results => results.json())
       .then(callback)
 })
@@ -46,7 +46,7 @@ export default {
 
 <template>
   <div v-bind:class = "(isFocused)?'fullpage':''">
-   <input class="input is-large" name="recipe_ingredient[ingredient][name]" placeholder="Ingredient Name" autocomplete="off" @click="isFocused=true" :value="this.searchTerm" @input="this.searchTerm = $event.target.value"/>
+   <input class="input is-large mb-4" name="recipe_ingredient[ingredient][name]" placeholder="Ingredient Name" autocomplete="off" @click="isFocused=true" :value="this.searchTerm" @input="this.searchTerm = $event.target.value"/>
 
     <div v-if="isFocused">
       <div v-for="ingredient in searchResults" class="searchItem is-size-3" @click="this.selected(ingredient)">

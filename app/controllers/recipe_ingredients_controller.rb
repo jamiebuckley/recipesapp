@@ -2,7 +2,7 @@ class RecipeIngredientsController < ApplicationController
 
   def set_values(id)
     @recipe = Recipe.for_current_user(current_user.id).find(id)
-    @unit_options = %w[Kilograms Grams Litres Millilitres Tablespoons Teaspoons Cups Pinches Items]
+    @unit_options = %w[g kg ml l tbsp tsp cup pinch items]
   end
 
   def index

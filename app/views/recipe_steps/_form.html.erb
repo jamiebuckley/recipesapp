@@ -1,0 +1,6 @@
+<%= form_for [@recipe, @new_recipe_step], url: @new_recipe_step.id? ? recipe_step_path(@recipe, @new_recipe_step) : recipe_steps_path, method: @new_recipe_step.id? ? :patch : :post  do |form| %>
+  <div class="field mb-4">
+    <%= form.text_area :instructions, class: "textarea", placeholder: "Instructions go here" %>
+  </div>
+  <%= form.submit "Save Step", class: "button is-primary is-pulled-right is-large" %>
+<% end %>

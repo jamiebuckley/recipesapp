@@ -1,0 +1,17 @@
+<div class="container p-2">
+  <p class="title">
+    <%= @ingredient.name %>
+  </p>
+
+  <p class="title is-size-4">
+    Used in recipes:
+  </p>
+
+  <ul>
+    <% @recipes.each do |recipe| %>
+      <li class="mb-4">
+        <%= link_to recipe.name, recipe_path(recipe) %>
+      </li>
+    <% end %>
+  </ul>
+</div>

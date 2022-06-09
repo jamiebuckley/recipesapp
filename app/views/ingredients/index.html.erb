@@ -1,0 +1,26 @@
+<div class="container p-2">
+  <p class="title">
+    All Ingredients
+  </p>
+
+<ul class="mb-6">
+
+<% @ingredients.each do |ingredient| %>
+    <li class="card mb-2" data-id="<%= ingredient.id %>" data-sortable-update-url="<%= ingredient_path(ingredient.id) %>">
+      <div class="card-content">
+        <div class="columns is-mobile">
+          <div class="column handle">
+            <p class="title is-size-5">
+              <%= link_to ingredient.name, ingredient_path(ingredient) %>
+            </p>
+          </div>
+          <div class="column is-one-quarter">
+            <%= button_to "Delete", ingredient_path(ingredient.id), method: :delete, class: "delete is-large is-pulled-right"%>
+          </div>
+        </div>
+      </div>
+    </li>
+<% end %>
+</ul>
+
+</div>

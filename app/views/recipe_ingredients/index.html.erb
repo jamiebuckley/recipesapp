@@ -1,4 +1,13 @@
 <div class="container p-2">
+  <div class="mb-4">
+    <%= link_to(recipe_path(@recipe), class: "button") do %>
+      <span class="icon">
+        <i class="fas fa-arrow-left"></i>
+      </span>
+      <span>Back to recipe</span>
+    <% end %>
+  </div>
+
   <p class="title">
     <%= @recipe.name %> Recipe Ingredients
   </p>
