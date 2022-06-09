@@ -38,6 +38,10 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
     if @recipe.update(permitted)
       if permitted[:image]
+        path = permitted[:image].tempfile.path
+        image = ImageProcessing::Vips.source(path)
+        result = image.resize_to_limit!(400, 300)
+        permitted[:image].tempfile = result
         @recipe.image.attach(permitted[:image])
       end
 

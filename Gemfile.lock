@@ -314,6 +314,7 @@ DEPENDENCIES
   pg_search (~> 2.3, >= 2.3.6)
   puma (~> 5.0)
   rails (~> 7.0.3)
+  ruby-vips
   selenium-webdriver
   sprockets-rails
   stimulus-rails

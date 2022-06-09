@@ -47,7 +47,7 @@
           <div class="card-image">
             <figure class="image is-4by3">
               <% if recipe.image.attached? %>
-                <%= image_tag recipe.image %>
+                <%= image_tag recipe.image, style: "object-fit: cover;" %>
               <% end %>
             </figure>
           </div>
