@@ -34,10 +34,14 @@ class RecipesController < ApplicationController
   end
 
   def update
-    permitted  = params.require(:recipe).permit(:name)
+    permitted  = params.require(:recipe).permit(:name, :image)
     @recipe = Recipe.find(params[:id])
     if @recipe.update(permitted)
-      redirect_to recipe_ingredients_path(id: @recipe.id)
+      if permitted[:image]
+        @recipe.image.attach(permitted[:image])
+      end
+
+      redirect_to recipe_ingredients_path(recipe_id: @recipe.id)
     else
       render :edit, status: 422
     end

@@ -1,8 +1,37 @@
-<div class="container p-2">
+<div class="container p-2 pb-4 is-clearfix">
   <p class="title">
     <%= @recipe.name %> Recipe
     <%= link_to "Edit Name", edit_recipe_path(@recipe), class: "ml-4 is-size-6" %>
   </p>
+
+  <div class="columns">
+    <div class="column is-half">
+      <% if @recipe.image.attached? %>
+        <%= image_tag @recipe.image %>
+      <% end %>
+
+      <%= form_for(@recipe) do |form| %>
+        <div class="field">
+        <div class="file">
+          <label class="file-label">
+            <%= form.file_field :image, class: "file-input" %>
+            <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label">
+              Choose a file…
+            </span>
+          </span>
+          </label>
+        </div>
+        </div>
+
+        <%= form.submit "Update", class: "button" %>
+      <% end %>
+    </div>
+  </div>
+
   <hr/>
   <p class="title is-size-5">
   Ingredients
@@ -25,7 +54,6 @@
     </tbody>
   </table>
 
-  <h2/>
   <p class="title is-size-5">
     Steps
     <%= link_to "Edit Steps", recipe_steps_path(@recipe), class: "ml-4 is-size-6" %>

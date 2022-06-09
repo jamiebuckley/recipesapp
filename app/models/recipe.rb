@@ -14,4 +14,6 @@ class Recipe < ApplicationRecord
   has_many :ingredients, through: :recipe_ingredients
 
   scope :for_current_user, ->(user_id) { where(user_id: user_id) }
+
+  has_one_attached :image
 end
