@@ -37,3 +37,38 @@
 // @import "bulma/sass/layout/section.sass";
 @import 'bulma/bulma';
 @import 'bulma-floating-button/dist/css/bulma-floating-button.sass';
+
+.recipe_ingredients_add {
+  background: white;
+}
+
+.recipe_ingredients_list {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.movesection {
+  background-color: #f6f6f6;
+  position: absolute;
+  width: 120px;
+  height: 100px;
+  top: 0px;
+  left: -10px;
+  z-index: 4;
+}
+
+@media only  screen and (max-width : 430px) {
+  .movesection {
+    width: 100px;
+  }
+}
+
+.recipe_ingredients_list .card-content {
+  overflow: hidden;
+  position:relative;
+}
+
+.recipe_ingredients_list .card-content .icon {
+  z-index: 5;
+  position:relative;
+}

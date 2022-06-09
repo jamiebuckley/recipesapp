@@ -20,7 +20,7 @@
 
   <div class="field has-addons flex-wrap">
     <div class="control is-expanded">
-      <%= f.number_field :quantity, class: "input is-large #{'is-danger' if @recipe_ingredient.errors.key?("quantity")}", placeholder: "Quantity" %>
+      <%= f.number_field :quantity, class: "input is-large #{'is-danger' if @recipe_ingredient.errors.key?("quantity")}", placeholder: "Quantity", step: "any" %>
     </div>
     <div class="control">
       <%= f.select :unit, options_for_select(@unit_options), {}, { class: "input is-large #{'is-danger' if @recipe_ingredient.errors.key?("quantity")}" } %>
