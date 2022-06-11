@@ -3,7 +3,10 @@ services:
   app:
     build: .
     environment:
-      - RAILS_ENV=docker
+      - RAILS_ENV=development
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
     ports:
       - '3000:3000'
   db:

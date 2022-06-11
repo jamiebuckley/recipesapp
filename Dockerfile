@@ -1,14 +1,32 @@
-# Dockerfile.rails
-FROM ruby:3.1.2 AS rails-toolbox
+FROM ruby:3.1.2-alpine
 
-# Default directory
-ENV INSTALL_PATH /opt/app
-RUN mkdir -p $INSTALL_PATH
+ENV BUNDLER_VERSION=2.0.2
 
-# Install rails
-RUN gem install rails bundler
-#RUN chown -R user:user /opt/app
-WORKDIR /opt/app
+RUN apk add --update --no-cache \
+    build-base \
+    nodejs \
+      yarn \
+      postgresql-dev  \
+      postgresql-client \
+      vips \
+    tzdata
 
-# Run a shell
-CMD ["/bin/sh"]
+RUN gem install bundler
+
+WORKDIR /app
+
+COPY Gemfile Gemfile.lock ./
+
+RUN bundle check || bundle install
+
+COPY package.json yarn.lock ./
+
+RUN yarn install --check-files
+
+COPY . ./
+
+RUN yarn build
+
+RUN yarn build:css
+
+ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]

@@ -58,7 +58,13 @@ resource "aws_iam_role_policy" "recipes_codebuild_policy" {
       },
       {
         Action = [
-          "ecr:GetAuthorizationToken"
+          "ecr:GetAuthorizationToken",
+          "ecr:CompleteLayerUpload",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:InitiateLayerUpload",
+          "ecr:PutImage",
+          "ecr:UploadLayerPart",
+          "ecr:BatchCheckLayerAvailability"
         ]
         Effect = "Allow"
         Resource = [

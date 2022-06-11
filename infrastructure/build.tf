@@ -2,7 +2,7 @@
 data "template_file" "buildspec" {
   template = file("../buildspec.yml")
   vars = {
-    ECR_ARN = data.terraform_remote_state.k8s.outputs.ecr_repository
+    ECR_URI = data.terraform_remote_state.k8s.outputs.ecr_repository_uri
   }
 }
 
@@ -16,13 +16,13 @@ resource "aws_codebuild_project" "rails_app_docker_build" {
     compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = "aws/codebuild/amazonlinux2-aarch64-standard:2.0"
     image_pull_credentials_type = "CODEBUILD"
-    privileged_mode             = false
+    privileged_mode             = true
     type                        = "ARM_CONTAINER"
 
     environment_variable {
-      name  = "ECR_ARN"
+      name  = "ECR_URI"
       type  = "PLAINTEXT"
-      value = data.terraform_remote_state.k8s.outputs.ecr_repository
+      value = data.terraform_remote_state.k8s.outputs.ecr_repository_uri
     }
   }
 
