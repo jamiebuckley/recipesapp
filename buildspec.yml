@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Logging into Amazon ECR...
+      - $(aws ecr get-login --region eu-west-2 --no-include-email)
+      - REPOSITORY_URI=${ECR_ARN}/recipes_app
+  build:
+    commands:
+      - echo Building docker image
+      - docker build -t $REPOSITORY_URI:latest .
+  post_build:
+    commands:
+      - echo Pushing docker image
+      - docker push $REPOSITORY_URI:latest

@@ -6,6 +6,10 @@ default: &default
   password: postgres
   host: localhost
 
+docker:
+  <<: *default
+  host: db
+
 development:
   <<: *default
   database: development

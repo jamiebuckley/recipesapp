@@ -38,3 +38,11 @@
 !/app/assets/builds/.keep
 
 /node_modules
+
+
+**/.terraform
+**/terraform.tfvars
+**/terraform.tfstate
+**/terraform.tfstate.backup
+
+.idea/
