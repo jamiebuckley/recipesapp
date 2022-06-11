@@ -17,8 +17,8 @@ WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
 
-bundle config set --local force_ruby_platform true;
-bundle config set --local build.nokogiri \"--use-system-libraries\";"
+RUN bundle config set --local force_ruby_platform true;
+RUN bundle config set --local build.nokogiri \"--use-system-libraries\";"
 
 RUN bundle check || bundle install
 
