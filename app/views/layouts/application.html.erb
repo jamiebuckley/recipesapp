@@ -55,6 +55,14 @@
   </div>
 </nav>
 
+<div class="container p-2">
+  <% if flash[:success] %>
+    <div class="notification is-success is-light">
+      <%= flash[:success] %>
+    </div>
+  <% end %>
+</div>
+
 <%= yield %>
 </body>
 </html>

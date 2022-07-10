@@ -1,0 +1,36 @@
+<div class="container p-2 pb-4 is-clearfix">
+
+  <div class="container p-2">
+    <div class="mb-4">
+      <%= link_to(shopping_lists_path, class: "button") do %>
+      <span class="icon">
+        <i class="fas fa-arrow-left"></i>
+      </span>
+        <span>Back to shopping list</span>
+      <% end %>
+    </div>
+
+  <p class="title">
+    Edit Shopping List
+  </p>
+
+  <p class="title is-size-6">Using recipes:</p>
+  <ul class="mb-6">
+    <% @used_recipes.each do |recipe| %>
+      <li class="card mb-2">
+        <div class="card-content">
+          <div class="columns is-mobile">
+            <div class="column handle">
+              <p class="title is-size-5">
+                <%= recipe.name %>
+              </p>
+            </div>
+            <div class="column is-one-quarter">
+              <%= link_to "Delete", remove_recipe_from_shopping_list_path(@shopping_list.id, recipe.id), data: { 'turbo-method': :delete }, class: "delete is-large is-pulled-right" %>
+            </div>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

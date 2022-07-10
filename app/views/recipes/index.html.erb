@@ -55,7 +55,18 @@
             <a href="<%= recipe_path(id: recipe.id) %>" class="card-footer-item">
               View
             </a>
-            <%= link_to 'Add to list', recipe_add_to_list_path(recipe.id), class: "card-footer-item", data: { turbo_method: :post } %>
+            <% if !@used_recipes.include?(recipe.id) %>
+              <%= button_to 'Add to list', recipe_add_to_list_path(recipe.id), :form_class => "card-footer-item", method: :post %>
+              <% else %>
+              <div class="card-footer-item">
+                <span class="icon-text has-text-success">
+                  <span class="icon">
+                    <i class="fas fa-check"></i>
+                  </span>
+                  <span>In list</span>
+                </span>
+              </div>
+            <% end %>
           </footer>
         </div>
       </div>

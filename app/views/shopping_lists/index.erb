@@ -1,15 +1,18 @@
 <div class="container p-2 pb-4 is-clearfix">
 
-  <% if !current_user.nil? && @shopping_list.user_id == current_user.id %>
-  <div class="is-pulled-right">
-    <a href="<%="whatsapp://send?text=Hey there, here is the shopping list #{shopping_list_by_code_url(@shopping_list.share_code)}" %>" } data-action="share/whatsapp/share">
-      <img width="150" src="/whatsapp-share-button.png"/>
-    </a>
-  </div>
+  <% if !current_user.nil? && !@shopping_list.nil? && @shopping_list.user_id == current_user.id %>
+    <div class="is-pulled-right">
+      <a href="<%="whatsapp://send?text=Hey there, here is the shopping list #{shopping_list_by_code_url(@shopping_list.share_code)}" %>" } data-action="share/whatsapp/share">
+        <img width="150" src="/whatsapp-share-button.png"/>
+      </a>
+    </div>
   <% end %>
 
   <p class="title">
     Shopping List
+    <% if !current_user.nil? && !@shopping_list.nil? && @shopping_list.user_id == current_user.id %>
+      <%= link_to "Edit", edit_shopping_list_path(@shopping_list), class: "ml-4 is-size-6" %>
+    <% end %>
   </p>
 
 <% if @shopping_list.nil? %>

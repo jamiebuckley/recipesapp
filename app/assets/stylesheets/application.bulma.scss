@@ -81,3 +81,15 @@
 .shopping_list_item:hover {
   background-color: #ececec;
 }
+
+.card-footer-item button {
+  background-color: hsl(0deg, 0%, 100%);
+  max-width: 100%;
+  position: relative;
+  border: none;
+  color: hsl(229deg, 53%, 53%);
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5;
+}

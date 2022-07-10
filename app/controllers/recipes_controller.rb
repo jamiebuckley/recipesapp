@@ -2,6 +2,12 @@ require 'securerandom'
 
 class RecipesController < ApplicationController
   def index
+    current_shopping_list = ShoppingList.for_current_user(current_user.id).where(complete: false).first
+    if !current_shopping_list.nil?
+      @used_recipes = current_shopping_list.shopping_list_ingredients.map {|i| i.recipe_ingredient.recipe_id }.uniq
+    else
+      @used_recipes = []
+    end
     @search_term = params[:search]
     @user_recipes = Recipe.where(user_id: current_user.id)
     if params[:search]
@@ -69,8 +75,11 @@ class RecipesController < ApplicationController
                                                                unit: recipe_ingredient.unit,
                                                                recipe_ingredient_id: recipe_ingredient.id)
       shopping_list.shopping_list_ingredients
+
+      flash[:success] = "Added #{recipe.name} to list"
     end
     shopping_list.save!
+    redirect_to recipes_path
   end
 
   def destroy
