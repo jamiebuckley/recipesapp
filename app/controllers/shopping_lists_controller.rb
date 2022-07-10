@@ -8,10 +8,11 @@ class ShoppingListsController < ApplicationController
     @groups = @groups.map do |group|
       values = group[1]
       values_reduced = values.reduce({}) { |acc, item|
-        if acc.key? item.ingredient_id
-          acc[item.ingredient_id].quantity += item.quantity
+        this_key = item.ingredient_id.to_s + "_" + item.unit
+        if acc.key? this_key
+          acc[this_key].quantity += item.quantity
         else
-          acc[item.ingredient_id] = item
+          acc[this_key] = item
         end
         acc
       }
