@@ -5,8 +5,12 @@ Rails.application.routes.draw do
   end
 
   resources :ingredients
+  resources :shopping_lists
 
   get '/ingredients/search/:search_term', to: 'ingredients#search', as: 'ingredients_search'
+  post '/recipes/:recipe_id/add_to_list', to: 'recipes#add_to_list', as: 'recipe_add_to_list'
+
+  get '/shopping_lists/:share_code', to: 'shopping_lists#show', as: 'shopping_list_by_code'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

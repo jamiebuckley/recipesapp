@@ -3,7 +3,23 @@
     <%= @ingredient.name %>
   </p>
 
-  <p class="title is-size-4">
+  <%= form_for(@ingredient) do |f| %>
+    <div class="field mb-6">
+      <div class="control">
+        <%= f.text_field :category, class: "input is-large #{'is-danger' if @ingredient.errors.key?("category")}", placeholder: "Enter category" %>
+      </div>
+
+      <% if @ingredient.errors.key?("name") %>
+        <% @ingredient.errors.full_messages_for(:name).each do |error| %>
+          <p class="help is-danger"><%= error %></p>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= f.submit "Update", class: "button is-primary is-pulled-right is-large" %>
+  <% end %>
+
+  <p class="title is-size-4 pt-5">
     Used in recipes:
   </p>
 

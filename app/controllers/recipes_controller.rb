@@ -1,5 +1,6 @@
-class RecipesController < ApplicationController
+require 'securerandom'
 
+class RecipesController < ApplicationController
   def index
     @search_term = params[:search]
     @user_recipes = Recipe.where(user_id: current_user.id)
@@ -49,6 +50,27 @@ class RecipesController < ApplicationController
     else
       render :edit, status: 422
     end
+  end
+
+  def add_to_list
+    recipe = Recipe.for_current_user(current_user.id).find(params[:recipe_id])
+    shopping_list = ShoppingList.for_current_user(current_user.id).where(complete: false).first
+    if shopping_list.nil?
+      shopping_list = ShoppingList.create(user: current_user, complete: false, share_code: SecureRandom.uuid.to_s)
+    end
+
+    existing_ingredients = shopping_list.shopping_list_ingredients.to_a
+
+    recipe.recipe_ingredients.each do |recipe_ingredient|
+      next if existing_ingredients.select { |i| i.recipe_ingredient_id == recipe_ingredient.id }.any?
+      shopping_list_ingredient = ShoppingListIngredient.create(shopping_list: shopping_list,
+                                                               ingredient_id: recipe_ingredient.ingredient_id,
+                                                               quantity: recipe_ingredient.quantity,
+                                                               unit: recipe_ingredient.unit,
+                                                               recipe_ingredient_id: recipe_ingredient.id)
+      shopping_list.shopping_list_ingredients
+    end
+    shopping_list.save!
   end
 
   def destroy

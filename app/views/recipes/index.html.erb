@@ -55,11 +55,7 @@
             <a href="<%= recipe_path(id: recipe.id) %>" class="card-footer-item">
               View
             </a>
-            <p class="card-footer-item">
-            <span>
-              Add to list
-            </span>
-            </p>
+            <%= link_to 'Add to list', recipe_add_to_list_path(recipe.id), class: "card-footer-item", data: { turbo_method: :post } %>
           </footer>
         </div>
       </div>

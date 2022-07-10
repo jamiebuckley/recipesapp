@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_09_213723) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_07_221702) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_09_213723) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.string "category"
   end
 
   create_table "pg_search_documents", force: :cascade do |t|
@@ -89,6 +90,29 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_09_213723) do
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
+  create_table "shopping_list_ingredients", force: :cascade do |t|
+    t.bigint "shopping_list_id", null: false
+    t.bigint "ingredient_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "quantity", null: false
+    t.string "unit", null: false
+    t.bigint "recipe_ingredient_id"
+    t.boolean "complete", default: false, null: false
+    t.index ["ingredient_id"], name: "index_shopping_list_ingredients_on_ingredient_id"
+    t.index ["recipe_ingredient_id"], name: "index_shopping_list_ingredients_on_recipe_ingredient_id"
+    t.index ["shopping_list_id"], name: "index_shopping_list_ingredients_on_shopping_list_id"
+  end
+
+  create_table "shopping_lists", force: :cascade do |t|
+    t.boolean "complete"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.string "share_code", null: false
+    t.index ["user_id"], name: "index_shopping_lists_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -109,4 +133,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_09_213723) do
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipe_steps", "recipes"
   add_foreign_key "recipes", "users"
+  add_foreign_key "shopping_list_ingredients", "ingredients"
+  add_foreign_key "shopping_list_ingredients", "recipe_ingredients"
+  add_foreign_key "shopping_list_ingredients", "shopping_lists"
+  add_foreign_key "shopping_lists", "users"
 end

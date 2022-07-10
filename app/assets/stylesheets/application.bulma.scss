@@ -72,3 +72,12 @@
   z-index: 5;
   position:relative;
 }
+
+.shopping_list_item {
+  height: 60px;
+  cursor: pointer;
+}
+
+.shopping_list_item:hover {
+  background-color: #ececec;
+}

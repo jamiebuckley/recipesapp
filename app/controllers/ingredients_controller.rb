@@ -15,4 +15,14 @@ class IngredientsController < ApplicationController
     @ingredient = Ingredient.where(user_id: current_user.id).find(params[:id])
     @recipes = Recipe.for_current_user(current_user.id).joins(recipe_ingredients: :ingredient).where(recipe_ingredients: { ingredients: { id: params[:id] }})
   end
+
+  def update
+    permitted  = params.require(:ingredient).permit(:category)
+    @ingredient = Ingredient.for_current_user(current_user.id).find(params[:id])
+    if @ingredient.update(permitted)
+      redirect_to ingredient_path(id: @ingredient.id)
+    else
+      render :show, status: 422
+    end
+  end
 end
