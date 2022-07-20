@@ -86,6 +86,12 @@ group :test do
   gem "webdrivers"
 end
 
+group :development, :test do
+  gem 'factory_bot_rails'
+  gem 'rspec-rails', '~> 6.0.0.rc1'
+  gem 'faker'
+end
+
 gem "cssbundling-rails", "~> 1.1"
 
 gem "jsbundling-rails", "~> 1.0"
