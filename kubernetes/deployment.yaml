@@ -10,7 +10,7 @@ spec:
   tls:
     - hosts:
         - recipes.jamiebuckley.dev
-      secretName:  recipes-certificate
+      secretName:  recipes-app-certificate
   rules:
     - host: recipes.jamiebuckley.dev
       http:
