@@ -57,6 +57,11 @@ spec:
           env:
             - name: RAILS_ENV
               value: "production"
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: recipes-secret-key
+                  key: recipes-secret-key
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:

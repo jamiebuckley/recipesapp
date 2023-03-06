@@ -37,6 +37,8 @@ gem 'acts_as_list'
 
 gem 'pg_search', '~> 2.3', '>= 2.3.6'
 
+gem 'activerecord-cockroachdb-adapter', '~> 7.0'
+
 gem "ruby-vips"
 
 # Use Redis adapter to run Action Cable in production
