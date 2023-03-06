@@ -55,11 +55,13 @@ spec:
           ports:
             - containerPort: 3000
           env:
-            - name: DATABASE_URL
-              value: "jdbc:postgresql://webbed-dryad-7035.8nj.cockroachlabs.cloud:26257/recipes"
-            - name: DATABASE_USER
+            - name: RAILS_ENV
+              value: "production"
+            - name: DB_HOST
+              value: "cockroachdb://webbed-dryad-7035.8nj.cockroachlabs.cloud:26257/recipes?sslmode=verify-full"
+            - name: DB_USER
               value: "recipes"
-            - name: DATABASE_PASSWORD
+            - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: recipes-password
