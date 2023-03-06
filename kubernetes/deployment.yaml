@@ -67,5 +67,15 @@ spec:
                 secretKeyRef:
                   name: recipes-database-url
                   key: recipes-database-url
+            - name: ACCESS_KEY_ID
+              valueFrom:
+               secretKeyRef:
+                 name: recipes-bucket-access
+                 key: access-key
+            - name: SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: recipes-bucket-access
+                  key: secret-key
       imagePullSecrets:
         - name: regcred
