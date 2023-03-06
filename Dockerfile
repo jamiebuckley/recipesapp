@@ -29,7 +29,6 @@ RUN yarn install --check-files
 COPY . ./
 
 RUN yarn build
-
 RUN yarn build:css
 
 ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]

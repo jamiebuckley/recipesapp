@@ -57,6 +57,8 @@ spec:
           env:
             - name: RAILS_ENV
               value: "production"
+            - name: RAILS_LOG_TO_STDOUT
+              value: "yes"
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -77,5 +79,12 @@ spec:
                 secretKeyRef:
                   name: recipes-bucket-access
                   key: secret-key
+            - name: GOOGLE_CLIENT_ID
+              value: "788140346389-b73etchui30vrs9en35lnopuofm8vvjm.apps.googleusercontent.com"
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: recipes-google-client-secret
+                  key: secret
       imagePullSecrets:
         - name: regcred
