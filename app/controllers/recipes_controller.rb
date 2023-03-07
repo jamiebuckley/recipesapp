@@ -11,7 +11,7 @@ class RecipesController < ApplicationController
     @search_term = params[:search]
     @user_recipes = Recipe.where(user_id: current_user.id)
     if params[:search]
-      @user_recipes = @user_recipes.search_name(params[:search])
+      @user_recipes = @user_recipes.where("lower(name) LIKE :prefix", prefix: "#{params[:search].downcase}%")
     end
   end
 

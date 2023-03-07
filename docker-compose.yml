@@ -4,21 +4,14 @@ services:
     build: .
     environment:
       - RAILS_ENV=development
-      - DB_HOST=db
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
+      - DATABASE_URL=cockroachdb://recipes:password@crdb:26257/recipes
     ports:
       - '3000:3000'
-  db:
-    image: postgres:14.1-alpine
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+  crdb:
+    image: cockroachdb/cockroach:v22.2.6
     ports:
-      - '5432:5432'
+      - "26257:26257"
+      - "8080:8080"
+    command: start-single-node --insecure
     volumes:
-      - db:/var/lib/postgresql/data
-volumes:
-  db:
-    driver: local
+      - "${PWD}/cockroach-data/crdb:/cockroach/cockroach-data"
