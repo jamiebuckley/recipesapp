@@ -1,0 +1,9 @@
+<div class="list-item" id="<%= dom_id(user_recipes_share) %>">
+  <div class="list-item-title"><%= user_recipes_share.share_email %></div>
+  <div class="list-item-content"></div>
+  <div class="list-item-controls">
+    <div class="buttons is-right">
+      <%= button_to "Cancel", cancel_user_recipes_share_path(user_recipes_share.id), method: :delete, class: "button is-danger"%>
+    </div>
+  </div>
+</div>

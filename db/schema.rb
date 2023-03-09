@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_07_221702) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_09_091508) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -101,6 +101,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_07_221702) do
     t.index ["user_id"], name: "index_shopping_lists_on_user_id"
   end
 
+  create_table "user_recipes_shares", force: :cascade do |t|
+    t.text "share_email", null: false
+    t.bigint "owner_id", null: false
+    t.bigint "recipient_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.boolean "accepted"
+    t.index ["owner_id"], name: "index_user_recipes_shares_on_owner_id"
+    t.index ["recipient_id"], name: "index_user_recipes_shares_on_recipient_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -125,4 +136,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_07_221702) do
   add_foreign_key "shopping_list_ingredients", "recipe_ingredients"
   add_foreign_key "shopping_list_ingredients", "shopping_lists"
   add_foreign_key "shopping_lists", "users"
+  add_foreign_key "user_recipes_shares", "users", column: "owner_id"
+  add_foreign_key "user_recipes_shares", "users", column: "recipient_id"
 end

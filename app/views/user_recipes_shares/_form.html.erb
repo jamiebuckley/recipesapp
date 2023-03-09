@@ -1,0 +1,18 @@
+<%= form_with model: @user_recipes_share, id: dom_id(@user_recipes_share) do |form| %>
+  <% if @user_recipes_share.errors.any? %>
+
+    <div class="notification is-danger">
+      <% @user_recipes_share.errors.full_messages.each do |err_message| %>
+        <%= err_message %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="field mb-2">
+    <div class="control">
+      <%= form.text_field :share_email, class: "input", placeholder: "Enter email address for recipient" %>
+    </div>
+  </div>
+
+  <%= form.submit "Send invite", class: "button is-primary is-pulled-right" %>
+<% end %>

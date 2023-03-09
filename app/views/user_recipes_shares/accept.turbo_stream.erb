@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@updated_recipes_share) do %>
+  <%= render "inbound_user_recipes_share", user_recipes_share: @updated_recipes_share %>
+<% end %>

@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'profile/index'
+  post 'profile/add_user_recipe_share'
+
+  resources :user_recipes_shares
+  post 'user_recipes_shares/:share_id/accept', to: 'user_recipes_shares#accept', as: 'accept_incoming_user_recipes_share'
+  delete 'user_recipes_shares/:share_id/cancel', to: 'user_recipes_shares#cancel', as: 'cancel_user_recipes_share'
+
   resources :recipes do
     resources :recipe_ingredients, as: :ingredients, path: :ingredients
     resources :recipe_steps, as: :steps, path: :steps

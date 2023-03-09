@@ -1,0 +1,30 @@
+<div class="container p-2">
+  <div class="is-size-4 mb-4"><%= current_user.email %></div>
+
+  <div class="is-size-6 has-text-weight-bold">Users sharing recipes with you:</div>
+  <div class="list has-visible-pointer-controls">
+    <div class="box if-only-child" id="no_inbound_shares">
+      No one is sharing recipes with you
+    </div>
+
+    <% @incoming_shares.each do |share| %>
+        <%= render "user_recipes_shares/inbound_user_recipes_share", user_recipes_share: share %>
+    <% end %>
+  </div>
+
+  <div class="is-size-6 has-text-weight-bold">Sharing recipes with:</div>
+  <div class="list has-visible-pointer-controls" id="outbound_shares">
+    <div class="box if-only-child" id="no_outbound_shares">
+      You are not currently sharing recipes with any users
+    </div>
+
+    <% @recipe_shares.each do |share| %>
+      <%= render "user_recipes_shares/outbound_user_recipes_share", user_recipes_share: share %>
+    <% end %>
+  </div>
+
+
+  <div class="is-size-6 has-text-weight-bold">Share recipes with new user:</div>
+
+  <%= render "user_recipes_shares/form" %>
+</div>

@@ -44,6 +44,7 @@
       <div class="navbar-item">
         <div class="buttons">
           <% if user_signed_in? %>
+            <%= link_to "Profile", profile_index_path, class: "button is-info is-outlined" %>
             <%= link_to "Log out", destroy_user_session_path, class: "button is-primary is-outlined", data: { turbo_method: :delete } %>
             <% else %>
 
@@ -59,6 +60,14 @@
   <% if flash[:success] %>
     <div class="notification is-success is-light">
       <%= flash[:success] %>
+    </div>
+  <% end %>
+</div>
+
+<div class="container p-2">
+  <% if flash[:error] %>
+    <div class="notification is-danger is-light">
+      <%= flash[:error] %>
     </div>
   <% end %>
 </div>

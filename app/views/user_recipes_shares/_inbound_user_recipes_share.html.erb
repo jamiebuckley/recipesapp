@@ -1,0 +1,12 @@
+<div class="list-item" id="<%= dom_id(user_recipes_share) %>">
+  <div class="list-item-title"><%= user_recipes_share.owner.email %></div>
+  <div class="list-item-content"></div>
+  <div class="list-item-controls">
+    <div class="buttons is-right">
+      <% if !user_recipes_share.accepted %>
+        <%= button_to "Accept", { controller: :user_recipes_shares, action: :accept, share_id: user_recipes_share.id }, class: "button is-primary"%>
+      <% end %>
+      <%= button_to "Cancel", cancel_user_recipes_share_path(user_recipes_share.id), method: :delete, class: "button is-danger"%>
+    </div>
+  </div>
+</div>

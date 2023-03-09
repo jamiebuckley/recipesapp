@@ -1,0 +1,9 @@
+<% if @created_user_recipes_share %>
+  <%= turbo_stream.append "outbound_shares" do %>
+    <%= render "outbound_user_recipes_share", user_recipes_share: @created_user_recipes_share %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace dom_id(@user_recipes_share) do %>
+  <%= render "form", post: @user_recipes_share %>
+<% end %>
