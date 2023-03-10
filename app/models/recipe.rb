@@ -8,7 +8,7 @@ class Recipe < ApplicationRecord
 
   validates :name, presence: true
 
-  has_many :recipe_ingredients, -> { order(position: :asc) }, :dependent => :delete_all
+  has_many :recipe_ingredients, -> { order(position: :asc) }, :dependent => :destroy
   has_many :recipe_steps, -> { order(position: :asc) }, :dependent => :delete_all
 
   has_many :ingredients, through: :recipe_ingredients
