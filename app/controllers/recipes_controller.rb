@@ -15,7 +15,7 @@ class RecipesController < ApplicationController
     # where urs.accepted = true and urs.recipient_id = '845781420561498113');
 
 
-    @user_recipes = Recipe.for_current_user_or_shared(current_user.id)
+    @user_recipes = Recipe.for_current_user_or_shared(current_user.id).joins(:user)
     if params[:search]
       @user_recipes = @user_recipes.where("lower(name) LIKE :prefix", prefix: "#{params[:search].downcase}%")
     end
