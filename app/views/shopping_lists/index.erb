@@ -43,7 +43,7 @@
     <% end %>
 
     <% if !current_user.nil? && @shopping_list.user_id == current_user.id %>
-      <%= button_to "Complete List", shopping_list_path(@shopping_list), method: :delete, class: "button is-danger mt-4 is-pulled-right", form: { data: { turbo_confirm: "Are you sure you want to complete this list?" } } %>
+      <%= button_to "Complete List", shopping_list_path(@shopping_list), method: :delete, class: "button is-danger mt-4 is-pulled-right", form: { data: {  turbo_confirm: "Are you sure you want to complete this list?" } } %>
     <% end %>
 <% end %>
 </div>

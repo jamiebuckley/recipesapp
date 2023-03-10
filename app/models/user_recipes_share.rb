@@ -17,4 +17,6 @@ class UserRecipesShare < ApplicationRecord
   def can_destroy?(current_user)
     self.recipient == current_user || self.owner == current_user
   end
+
+  before_save { share_email.downcase! }
 end

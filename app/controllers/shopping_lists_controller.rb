@@ -69,6 +69,6 @@ class ShoppingListsController < ApplicationController
                        .find(params[:id])
     @shopping_list.complete = true
     @shopping_list.save
-    redirect_to :back
+    redirect_to shopping_lists_path, status: 303
   end
 end

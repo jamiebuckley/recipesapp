@@ -36,7 +36,7 @@
     <% @user_recipes.each do |recipe| %>
       <div class="column is-one-third-desktop">
         <div class="card">
-          <div class="card-content">
+          <div class="card-content" style="position:relative">
 
             <% if recipe.user != current_user %>
               <span class="shared-text is-size-7">(From <%= recipe.user.email %>)</span>
