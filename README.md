@@ -9,11 +9,11 @@
 
 This app was created as it takes a fair amount of effort to find the recipes we liked in an app, copy the ingredients into google keep for the shopping list, etc.
 
-If there's one thing I hate, it's manual labour.
+That is altogether too much effort.
 
-On top of this, we like to have our shopping lists categorised, e.g. 'vegetables, meat', which involves further effort.
+On top of this, we like to have our shopping lists categorised before getting to the supermarket, e.g. 'vegetables, meat', which involves further effort.
 
-Enter this recipes app, a terrible Ruby app that took far longer to code than doing the above ever would.
+Enter this recipes app, that took far longer to code than the lifetime effort spent doing the above ever would.
 
 Running on Kubernetes, using CockroachDB and Linode object storage for persistence.
 

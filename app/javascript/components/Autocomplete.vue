@@ -62,7 +62,8 @@ export default {
 
 <style>
 .fullpage {
-  margin-left:-6px;
+  left: 0px;
+  margin-left:4px;
   padding: 4px;
   position:fixed;
   width:100%;
