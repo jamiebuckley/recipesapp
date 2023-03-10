@@ -1,7 +1,10 @@
 <div class="container p-2 pb-4 is-clearfix">
   <p class="title">
     <%= @recipe.name %> Recipe
-    <%= link_to "Edit Name", edit_recipe_path(@recipe), class: "ml-4 is-size-6" %>
+
+    <% if @recipe.user == current_user %>
+      <%= link_to "Edit Name", edit_recipe_path(@recipe), class: "ml-4 is-size-6" %>
+    <% end %>
   </p>
 
   <div class="columns">
@@ -10,24 +13,26 @@
         <%= image_tag @recipe.image %>
       <% end %>
 
-      <%= form_for(@recipe) do |form| %>
-        <div class="field">
-        <div class="file">
-          <label class="file-label">
-            <%= form.file_field :image, class: "file-input" %>
-            <span class="file-cta">
-            <span class="file-icon">
-              <i class="fas fa-upload"></i>
+      <% if @recipe.user == current_user %>
+        <%= form_for(@recipe) do |form| %>
+          <div class="field">
+          <div class="file">
+            <label class="file-label">
+              <%= form.file_field :image, class: "file-input" %>
+              <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                Choose a file…
+              </span>
             </span>
-            <span class="file-label">
-              Choose a file…
-            </span>
-          </span>
-          </label>
-        </div>
-        </div>
+            </label>
+          </div>
+          </div>
 
-        <%= form.submit "Update", class: "button" %>
+          <%= form.submit "Update", class: "button" %>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -35,7 +40,9 @@
   <hr/>
   <p class="title is-size-5">
   Ingredients
-  <%= link_to "Edit Ingredients", recipe_ingredients_path(@recipe), class: "ml-4 is-size-6" %>
+  <% if @recipe.user == current_user %>
+    <%= link_to "Edit Ingredients", recipe_ingredients_path(@recipe), class: "ml-4 is-size-6" %>
+  <% end %>
   </p>
   <table class="table is-fullwidth">
     <thead>
@@ -56,7 +63,9 @@
 
   <p class="title is-size-5">
     Steps
-    <%= link_to "Edit Steps", recipe_steps_path(@recipe), class: "ml-4 is-size-6" %>
+    <% if @recipe.user == current_user %>
+      <%= link_to "Edit Steps", recipe_steps_path(@recipe), class: "ml-4 is-size-6" %>
+    <% end %>
   </p>
 
 
@@ -67,6 +76,7 @@
       </div>
     <% end %>
 
-
-  <%= button_to "Delete Recipe", recipe_path(@recipe), method: :delete, class: "button is-danger mt-4 is-pulled-right", form: { data: { turbo_confirm: "Are you sure you want to delete this recipe?" } } %>
+  <% if @recipe.user == current_user %>
+    <%= button_to "Delete Recipe", recipe_path(@recipe), method: :delete, class: "button is-danger mt-4 is-pulled-right", form: { data: { turbo_confirm: "Are you sure you want to delete this recipe?" } } %>
+  <% end %>
 </div>
