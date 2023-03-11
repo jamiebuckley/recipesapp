@@ -1,5 +1,26 @@
 <template>
   <div class="container p-2">
+    <div class="mb-4 is-clearfix">
+      <button class="button is-danger is-pulled-right" @click="deleteModalShown = true">
+        Complete List
+      </button>
+    </div>
+    <div class="modal" :class="{ 'is-active': deleteModalShown }">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="box m-4">
+          Are you sure you want to complete this list?
+
+
+          <div class="buttons mb-0 pt-4 is-pulled-right">
+            <button class="button" @click="deleteModalShown = false">Cancel</button>
+            <button class="button is-danger" @click="confirmDelete()">Delete</button>
+          </div>
+          <div class="is-clearfix"></div>
+        </div>
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
 
     <div class="shopping-list-area">
       <div v-for="group in shopping_list_items.groups">
@@ -68,7 +89,8 @@ export default {
       shopping_list_items: {},
       newItemName: "",
       newItemCategory: "Ungrouped",
-      categories: ["Ungrouped"]
+      categories: ["Ungrouped"],
+      deleteModalShown: false
     }
   },
   methods: {
@@ -97,6 +119,22 @@ export default {
         })
         this.newItemName = "";
       });
+    },
+    confirmDelete() {
+      const csrfToken = document.querySelector("[name='csrf-token']").content;
+      const options = {
+        headers: {
+          "X-CSRF-Token": csrfToken,
+          "Content-Type": "application/json"
+        },
+        method: "delete"
+      };
+
+
+      fetch("/shopping_lists/" + this.shopping_list_items.id, options)
+          .then(data => {
+            window.location.replace("/");
+          });
     }
   },
   created() {
@@ -111,7 +149,7 @@ export default {
           this.categories = data.groups.map(g => g.name)
           if (this.categories.indexOf("Ungrouped") === -1) this.categories.push("Ungrouped");
         });
-  }
+  },
 }
 </script>
 

@@ -27,8 +27,8 @@ class ShoppingListsController < ApplicationController
     @groups = @groups.deep_merge(@additional_items_groups)
   end
 
-  def to_json_hash(groups)
-    hash_result = {}
+  def to_json_hash(shopping_list, groups)
+    hash_result = { id: shopping_list.id.to_s }
     hash_result["groups"] = groups.map do |group|
       group_result = {}
       group_result["name"] = group[0]
@@ -65,7 +65,7 @@ class ShoppingListsController < ApplicationController
         render :index
       end
       format.json do
-        render :json => to_json_hash(@groups)
+        render :json => to_json_hash(@shopping_list, @groups)
       end
     end
   end
