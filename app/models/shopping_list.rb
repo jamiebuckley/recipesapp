@@ -5,4 +5,5 @@ class ShoppingList < ApplicationRecord
 
   has_many :shopping_list_ingredients
   has_many :ingredients, through: :shopping_list_ingredients
+  has_many :shopping_list_additional_items
 end

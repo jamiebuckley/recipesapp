@@ -2,6 +2,7 @@
 import "@hotwired/turbo-rails"
 import "./controllers/index"
 import "./autocomplete"
+import "./shopping_list"
 
 const wireUpHamburgerMenu = () => {
     // Get all "navbar-burger" elements

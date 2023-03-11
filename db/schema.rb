@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_09_091508) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_11_102313) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -78,6 +78,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_09_091508) do
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
+  create_table "shopping_list_additional_items", force: :cascade do |t|
+    t.string "name"
+    t.bigint "shopping_list_id", null: false
+    t.string "category"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["shopping_list_id"], name: "index_shopping_list_additional_items_on_shopping_list_id"
+  end
+
   create_table "shopping_list_ingredients", force: :cascade do |t|
     t.bigint "shopping_list_id", null: false
     t.bigint "ingredient_id", null: false
@@ -132,6 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_09_091508) do
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipe_steps", "recipes"
   add_foreign_key "recipes", "users"
+  add_foreign_key "shopping_list_additional_items", "shopping_lists"
   add_foreign_key "shopping_list_ingredients", "ingredients"
   add_foreign_key "shopping_list_ingredients", "recipe_ingredients"
   add_foreign_key "shopping_list_ingredients", "shopping_lists"

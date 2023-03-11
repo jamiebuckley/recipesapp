@@ -1,10 +1,19 @@
-<div class="container p-2 pb-4 is-clearfix">
+<div class="container p-2 pb-4 is-clearfix" id="static_data">
 
   <% if !current_user.nil? && !@shopping_list.nil? && @shopping_list.user_id == current_user.id %>
     <div class="is-pulled-right">
-      <a href="<%="whatsapp://send?text=Hey there, here is the shopping list #{shopping_list_by_code_url(@shopping_list.share_code)}" %>" } data-action="share/whatsapp/share">
-        <img width="150" src="/whatsapp-share-button.png"/>
-      </a>
+      <div>
+        <a class="is-pulled-right" href="<%="whatsapp://send?text=Hey there, here is the shopping list #{shopping_list_by_code_url(@shopping_list.share_code)}" %>" } data-action="share/whatsapp/share">
+          <img width="150" src="/whatsapp-share-button.png"/>
+        </a>
+      </div>
+
+      <div class="is-pulled-right">
+        Or share the following link
+        <a href="<%=shopping_list_by_code_url(@shopping_list.share_code) %>">
+          <%=shopping_list_by_code_url(@shopping_list.share_code) %>
+        </a>
+      </div>
     </div>
   <% end %>
 
@@ -34,8 +43,15 @@
         <tbody>
         <% group[1].each do |shopping_list_ingredient| %>
           <tr class="block shopping_list_item">
-            <td><%= shopping_list_ingredient.ingredient.name %></td>
-            <td><%= shopping_list_ingredient.quantity %> <%= shopping_list_ingredient.unit %></td>
+            <% if shopping_list_ingredient.instance_of? ShoppingListIngredient %>
+              <td><%= shopping_list_ingredient.ingredient.name %></td>
+              <td><%= shopping_list_ingredient.quantity %> <%= shopping_list_ingredient.unit %></td>
+            <% end %>
+
+            <% if shopping_list_ingredient.instance_of? ShoppingListAdditionalItem %>
+              <td><%= shopping_list_ingredient.name %></td>
+              <td></td>
+            <% end %>
           </tr>
         <% end %>
         </tbody>
@@ -46,4 +62,7 @@
       <%= button_to "Complete List", shopping_list_path(@shopping_list), method: :delete, class: "button is-danger mt-4 is-pulled-right", form: { data: {  turbo_confirm: "Are you sure you want to complete this list?" } } %>
     <% end %>
 <% end %>
+</div>
+<div id="shopping_list">
+
 </div>

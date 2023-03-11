@@ -1,9 +1,14 @@
 class ShoppingListsController < ApplicationController
+
   skip_before_action :authenticate_user!, only: [:show]
 
   def create_groups
     @groups = @shopping_list.shopping_list_ingredients
                             .to_a.group_by {|i| i.ingredient.category.blank? ? 'Ungrouped' : i.ingredient.category }
+
+    @additional_items_groups = @shopping_list.shopping_list_additional_items
+                                 .to_a.group_by {|i| i.category.blank? ? 'Ungrouped' : i.category }
+
 
     @groups = @groups.map do |group|
       values = group[1]
@@ -18,6 +23,33 @@ class ShoppingListsController < ApplicationController
       }
       [group[0],  values_reduced.values]
     end
+    @groups = @groups.each_with_object({}) do |i, my_hash| my_hash[i[0]] = i[1] end
+    @groups = @groups.deep_merge(@additional_items_groups)
+  end
+
+  def to_json_hash(groups)
+    hash_result = {}
+    hash_result["groups"] = groups.map do |group|
+      group_result = {}
+      group_result["name"] = group[0]
+      group_result["items"] = group[1].map do |group_item|
+        group_item_result = {}
+        group_item_result["id"] = group_item.id
+
+        if group_item.instance_of? ShoppingListAdditionalItem
+          group_item_result["name"] = group_item.name
+        end
+
+        if group_item.instance_of? ShoppingListIngredient
+          group_item_result["name"] = group_item.ingredient.name
+          group_item_result["quantity"] = "#{group_item.quantity.to_s.sub(/\.?0+$/, '')} #{group_item["unit"]}"
+        end
+        group_item_result
+      end
+      group_result
+    end
+
+    hash_result
   end
 
   def index
@@ -27,6 +59,15 @@ class ShoppingListsController < ApplicationController
     end
 
     create_groups
+
+    respond_to do |format|
+      format.html do
+        render :index
+      end
+      format.json do
+        render :json => to_json_hash(@groups)
+      end
+    end
   end
 
   def edit

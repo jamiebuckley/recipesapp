@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   resources :ingredients
   resources :shopping_lists
 
+  resources :shopping_list_additional_items, only: :create
+
   get '/ingredients/search/:search_term', to: 'ingredients#search', as: 'ingredients_search'
   post '/recipes/:recipe_id/add_to_list', to: 'recipes#add_to_list', as: 'recipe_add_to_list'
 
