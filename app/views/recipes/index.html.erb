@@ -52,6 +52,8 @@
             <figure class="image is-4by3">
               <% if recipe.image.attached? %>
                 <%= image_tag recipe.image, style: "object-fit: cover;" %>
+                <% else %>
+                <img src="/neptune-placeholder-48.jpg"/>
               <% end %>
             </figure>
           </div>

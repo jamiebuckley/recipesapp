@@ -11,6 +11,8 @@
     <div class="column is-half">
       <% if @recipe.image.attached? %>
         <%= image_tag @recipe.image %>
+        <% else %>
+        <img src="/neptune-placeholder-48.jpg"/>
       <% end %>
 
       <% if @recipe.user == current_user %>

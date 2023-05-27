@@ -10,12 +10,28 @@ class RecipeIngredientsController < ApplicationController
 
     @recipe_ingredient = RecipeIngredient.new(recipe_id: params[:id])
     @recipe_ingredient.ingredient = Ingredient.new()
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: @recipe.recipe_ingredients.map { |recipe_ingredient|
+          {
+            id: recipe_ingredient.id.to_s,
+            position: recipe_ingredient.position,
+            name: recipe_ingredient.ingredient.name,
+            quantity: recipe_ingredient.quantity,
+            unit: recipe_ingredient.unit
+          }
+        }
+
+      end
+    end
   end
 
   def create
     set_values(params[:recipe_id])
 
-    permitted  = params.require(:recipe_ingredient).permit(:quantity, :unit, :ingredient => :name)
+    permitted = params.require(:recipe_ingredient).permit(:quantity, :unit, :ingredient => :name)
     @recipe_ingredient = RecipeIngredient.new(recipe_id: params[:recipe_id], quantity: permitted[:quantity], unit: permitted[:unit], user_id: current_user.id)
 
     @recipe_ingredient.ingredient = Ingredient.where(:name => params[:recipe_ingredient][:ingredient][:name], :user_id => current_user.id)
@@ -23,10 +39,29 @@ class RecipeIngredientsController < ApplicationController
     @recipe_ingredient.valid?
     @recipe_ingredient.ingredient.valid?
 
-    if @recipe_ingredient.valid? && @recipe_ingredient.ingredient.valid? && @recipe_ingredient.save
-      redirect_to recipe_ingredients_path(params[:recipe_id])
-    else
-      render :index, status: 422
+    respond_to do |format|
+      format.html do
+        if @recipe_ingredient.valid? && @recipe_ingredient.ingredient.valid? && @recipe_ingredient.save
+          redirect_to recipe_ingredients_path(params[:recipe_id])
+        else
+          render :index, status: 422
+        end
+      end
+      format.json do
+        if @recipe_ingredient.valid? && @recipe_ingredient.ingredient.valid? && @recipe_ingredient.save
+        render json: {
+            id: @recipe_ingredient.id.to_s,
+            position: @recipe_ingredient.position,
+            name: @recipe_ingredient.ingredient.name,
+            quantity: @recipe_ingredient.quantity,
+            unit: @recipe_ingredient.unit
+          }
+        else
+          render json: {
+
+          }, status: 400
+        end
+      end
     end
   end
 
@@ -40,6 +75,14 @@ class RecipeIngredientsController < ApplicationController
   def destroy
     @recipe_ingredient = RecipeIngredient.for_current_user(current_user.id).find(params[:id])
     @recipe_ingredient.destroy
-    redirect_to recipe_ingredients_path(params[:recipe_id])
+
+    respond_to do |format|
+        format.html do
+          redirect_to recipe_ingredients_path(params[:recipe_id])
+        end
+        format.json do
+          head :ok
+        end
+      end
   end
 end

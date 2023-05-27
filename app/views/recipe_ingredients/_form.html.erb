@@ -14,10 +14,6 @@
   </div>
   <% end %>
 
-  <div id="autocomplete">
-
-  </div>
-
   <div class="field has-addons flex-wrap">
     <div class="control is-expanded">
       <%= f.number_field :quantity, class: "input is-large #{'is-danger' if @recipe_ingredient.errors.key?("quantity")}", placeholder: "Quantity", step: "any" %>

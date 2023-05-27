@@ -39,8 +39,16 @@
 @import 'bulma-floating-button/dist/css/bulma-floating-button.sass';
 @import "bulma-list/sass/bulma-list.sass";
 
+html, body {
+  height:100%;
+}
+
 .recipe_ingredients_add {
   background: white;
+  position:fixed;
+  bottom:10px;
+  padding-right:20px;
+  width:100%;
 }
 
 .recipe_ingredients_list {

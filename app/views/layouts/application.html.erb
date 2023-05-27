@@ -46,9 +46,12 @@
           <% if user_signed_in? %>
             <%= link_to "Profile", profile_index_path, class: "button is-info is-outlined" %>
             <%= link_to "Log out", destroy_user_session_path, class: "button is-primary is-outlined", data: { turbo_method: :delete } %>
-            <% else %>
-
-            <%= button_to "Sign in", user_google_oauth2_omniauth_authorize_path, :data => {turbo: "false"}, class: "button is-primary" %>
+          <% else %>
+            <%= button_to "Sign in", user_google_oauth2_omniauth_authorize_path, :data => { turbo: "false" }, class: "button is-primary" %>
+            <% if Rails.env.development? %>
+              <%= link_to "Local Sign up", new_user_registration_path, class: "button is-primary" %>
+              <%= link_to "Local Login", new_user_session_path, class: "button is-primary" %>
+            <% end %>
           <% end %>
         </div>
       </div>
@@ -56,21 +59,21 @@
   </div>
 </nav>
 
+<% if flash[:success] %>
 <div class="container p-2">
-  <% if flash[:success] %>
     <div class="notification is-success is-light">
       <%= flash[:success] %>
     </div>
-  <% end %>
 </div>
+<% end %>
 
+<% if flash[:error] %>
 <div class="container p-2">
-  <% if flash[:error] %>
     <div class="notification is-danger is-light">
       <%= flash[:error] %>
     </div>
-  <% end %>
 </div>
+<% end %>
 
 <%= yield %>
 </body>

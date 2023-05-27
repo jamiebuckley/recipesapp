@@ -1,50 +1,9 @@
-<div class="container p-2">
-  <div class="mb-4">
-    <%= link_to(recipe_path(@recipe), class: "button") do %>
-      <span class="icon">
-        <i class="fas fa-arrow-left"></i>
-      </span>
-      <span>Back to recipe</span>
-    <% end %>
-  </div>
+<script>
+    window.recipeId = '<%= @recipe.id.to_s %>';
+    window.recipeUrl = '<%= url_for(@recipe) %>';
+    window.ingredientPostUrl = '<%= url_for(@recipe_ingredient) %>';
+    window.unitsOfMeasure = <%= raw @unit_options.to_json %>;
+</script>
+<div id="addIngredientAppWrapper" style="height: calc(100% - 52px); position: relative;">
 
-  <p class="title">
-    <%= @recipe.name %> Recipe Ingredients
-  </p>
-
-
-  <div class="recipe_ingredients_list">
-  <ul class="mb-6" data-controller="sortable" data-sortable-animation-value="150"
-      data-sortable-resource-name-value="recipe_ingredient"
-      data-sortable-handle-value=".handle">
-    <% @recipe.recipe_ingredients.each do |recipe_ingredient| %>
-      <li class="card mb-2" data-id="<%= recipe_ingredient.id %>" data-sortable-update-url="<%= recipe_ingredient_path(@recipe.id, recipe_ingredient.id) %>">
-        <div class="card-content">
-          <div class="columns is-mobile">
-            <div class="column is-3 handle">
-              <span class="icon is-large">
-                <i class="fas fa-arrows"></i>
-              </span>
-              <div class="movesection"></div>
-            </div>
-            <div class="column">
-              <p class="title is-size-5">
-                <%= recipe_ingredient.ingredient.name %>
-              </p>
-              <p class="subtitle">
-                <%= recipe_ingredient.quantity %> <%= recipe_ingredient.unit %>
-              </p>
-            </div>
-            <div class="column is-one-quarter">
-              <%= button_to "Delete", recipe_ingredient_path(@recipe, recipe_ingredient), method: :delete, class: "delete is-large is-pulled-right"%>
-            </div>
-          </div>
-        </div>
-      </li>
-    <% end %>
-  </ul>
-  </div>
-  <div class="recipe_ingredients_add mt-2">
-    <%= render 'form' %>
-  </div>
 </div>
