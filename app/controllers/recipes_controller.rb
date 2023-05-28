@@ -17,16 +17,16 @@ class RecipesController < ApplicationController
 
     @user_recipes = Recipe.for_current_user_or_shared(current_user.id).joins(:user).left_joins(:recipe_tags)
     if params[:search]
-      search_string = params[:search]
+      search_string = params[:search].downcase
       search_terms = search_string.split(",")
       tags,search_words = search_terms.partition { |word| word.match? /tag:[a-zA-Z]+/ }
       tags_values = tags.map { |t| t.split(":")[1] }
       search_string = search_words.join(" ").strip!
       if tags_values.any?
-        @user_recipes = @user_recipes.where('recipe_tags.tag in (?)', tags_values)
+        @user_recipes = @user_recipes.where('lower(recipe_tags.tag) in (?)', tags_values)
       end
       unless search_string.blank?
-        @user_recipes = @user_recipes.where("lower(name) LIKE :prefix", prefix: "#{search_string.downcase}%")
+        @user_recipes = @user_recipes.where("lower(name) LIKE :prefix", prefix: "#{search_string}%")
       end
     end
   end
