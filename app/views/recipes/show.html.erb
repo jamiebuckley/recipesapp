@@ -43,7 +43,15 @@
     Tags
   </p>
 
-  <%= render 'recipe_tags' %>
+  <% if @recipe.user == current_user %>
+    <%= render 'recipe_tags' %>
+    <% else %>
+    <% @recipe.recipe_tags.each do |recipe_tag| %>
+        <span class="tag is-large">
+          <%= recipe_tag.tag %>
+        </span>
+    <% end %>
+  <% end %>
 
   <hr/>
   <p class="title is-size-5">
