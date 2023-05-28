@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_11_102313) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_28_154332) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -68,6 +68,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_11_102313) do
     t.bigint "position"
     t.bigint "user_id"
     t.index ["recipe_id"], name: "index_recipe_steps_on_recipe_id"
+  end
+
+  create_table "recipe_tags", force: :cascade do |t|
+    t.bigint "recipe_id", null: false
+    t.string "tag"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["recipe_id"], name: "index_recipe_tags_on_recipe_id"
   end
 
   create_table "recipes", force: :cascade do |t|
@@ -140,6 +148,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_11_102313) do
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
   add_foreign_key "recipe_steps", "recipes"
+  add_foreign_key "recipe_tags", "recipes"
   add_foreign_key "recipes", "users"
   add_foreign_key "shopping_list_additional_items", "shopping_lists"
   add_foreign_key "shopping_list_ingredients", "ingredients"

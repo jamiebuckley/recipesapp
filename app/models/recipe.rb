@@ -12,6 +12,7 @@ class Recipe < ApplicationRecord
   has_many :recipe_steps, -> { order(position: :asc) }, :dependent => :delete_all
 
   has_many :ingredients, through: :recipe_ingredients
+  has_many :recipe_tags
 
   scope :for_current_user, ->(user_id) { where(user_id: user_id) }
   scope :for_current_user_or_shared, -> (user_id) { where(user_id: user_id).or(where(user_id: UserRecipesShare.where(accepted: true, recipient_id: user_id).select("owner_id")))}

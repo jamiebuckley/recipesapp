@@ -43,6 +43,12 @@
             <% end %>
             <p class="title is-size-6">
               <%= recipe.name.truncate(35) %>
+
+              <% recipe.recipe_tags.each do |recipe_tag| %>
+                <span class="tag">
+                  <%= recipe_tag.tag %>
+                </span>
+              <% end %>
             </p>
             <p class="subtitle">
               <%= recipe.updated_at.strftime("%B %d, %Y") %>

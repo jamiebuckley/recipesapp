@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   get '/ingredients/search/:search_term', to: 'ingredients#search', as: 'ingredients_search'
   post '/recipes/:recipe_id/add_to_list', to: 'recipes#add_to_list', as: 'recipe_add_to_list'
   delete '/recipes/:recipe_id/remove_from_list', to: 'recipes#remove_from_list', as: 'recipe_remove_from_list'
+  post '/recipes/:recipe_id/tags', to: 'recipes#add_tag', as: 'recipe_add_tag'
+  delete '/recipes/:recipe_id/tags/:tag_id', to: 'recipes#remove_tag', as: 'recipe_remove_tag'
 
   get '/shopping_lists/:share_code', to: 'shopping_lists#show', as: 'shopping_list_by_code'
 
