@@ -1,0 +1,32 @@
+<%= turbo_stream.replace dom_id(@recipe) do %>
+  <%= link_to recipe_remove_from_list_path(@recipe.id), data: { 'turbo-method': :delete }, class: "card-footer-item", id: dom_id(@recipe) do %>
+    <span class="icon-text has-text-success">
+      <span class="icon">
+        <i class="fas fa-check"></i>
+      </span>
+      <span>In list</span>
+    </span>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.prepend "flash" do %>
+  <div class="notification is-success is-light">
+    Added recipe <%= @recipe.name %> to list
+  </div>
+<% end %>
+
+<%= turbo_stream.update "flash" do %>
+  <div>
+    <script>
+        bulmaToast.toast({
+            message: 'Added <%= @recipe.name %> to list',
+            dismissible: true,
+            type: 'is-success',
+            animate: { in: 'fadeIn', out: 'fadeOut' },
+            position: 'top-center',
+            closeOnClick: true,
+            duration: 2000
+        })
+    </script>
+  </div>
+<% end %>

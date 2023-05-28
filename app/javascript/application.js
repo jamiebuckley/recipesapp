@@ -3,6 +3,8 @@ import "@hotwired/turbo-rails"
 import "../../public/controllers/index"
 import "./add_ingredient"
 import "./shopping_list"
+import * as bulmaToast from 'bulma-toast'
+window.bulmaToast = bulmaToast;
 
 const wireUpHamburgerMenu = () => {
     // Get all "navbar-burger" elements

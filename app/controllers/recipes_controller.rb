@@ -2,9 +2,9 @@ require 'securerandom'
 
 class RecipesController < ApplicationController
   def index
-    current_shopping_list = ShoppingList.for_current_user(current_user.id).where(complete: false).first
-    if !current_shopping_list.nil?
-      @used_recipes = current_shopping_list.shopping_list_ingredients.map {|i| i.recipe_ingredient.recipe_id }.uniq
+    @current_shopping_list = ShoppingList.for_current_user(current_user.id).where(complete: false).first
+    if !@current_shopping_list.nil?
+      @used_recipes = @current_shopping_list.shopping_list_ingredients.map {|i| i.recipe_ingredient.recipe_id }.uniq
     else
       @used_recipes = []
     end
@@ -71,27 +71,52 @@ class RecipesController < ApplicationController
   end
 
   def add_to_list
-    recipe = Recipe.for_current_user_or_shared(current_user.id).find(params[:recipe_id])
-    shopping_list = ShoppingList.for_current_user(current_user.id).where(complete: false).first
-    if shopping_list.nil?
-      shopping_list = ShoppingList.create(user: current_user, complete: false, share_code: SecureRandom.uuid.to_s)
+    @recipe = Recipe.for_current_user_or_shared(current_user.id).find(params[:recipe_id])
+    @shopping_list = ShoppingList.for_current_user(current_user.id).where(complete: false).first
+    if @shopping_list.nil?
+      @shopping_list = ShoppingList.create(user: current_user, complete: false, share_code: SecureRandom.uuid.to_s)
     end
 
-    existing_ingredients = shopping_list.shopping_list_ingredients.to_a
+    existing_ingredients = @shopping_list.shopping_list_ingredients.to_a
 
-    recipe.recipe_ingredients.each do |recipe_ingredient|
+    @recipe.recipe_ingredients.each do |recipe_ingredient|
       next if existing_ingredients.select { |i| i.recipe_ingredient_id == recipe_ingredient.id }.any?
-      shopping_list_ingredient = ShoppingListIngredient.create(shopping_list: shopping_list,
+      shopping_list_ingredient = ShoppingListIngredient.create(shopping_list: @shopping_list,
                                                                ingredient_id: recipe_ingredient.ingredient_id,
                                                                quantity: recipe_ingredient.quantity,
                                                                unit: recipe_ingredient.unit,
                                                                recipe_ingredient_id: recipe_ingredient.id)
-      shopping_list.shopping_list_ingredients
 
-      flash[:success] = "Added #{recipe.name} to list"
     end
-    shopping_list.save!
-    redirect_to recipes_path
+    @shopping_list.save!
+
+    respond_to do |format|
+      format.html do
+        flash[:success] = "Added #{@recipe.name} to list"
+        redirect_to recipes_path
+      end
+      format.turbo_stream do
+
+      end
+    end
+  end
+
+  def remove_from_list
+    @recipe = Recipe.for_current_user_or_shared(current_user.id).find(params[:recipe_id])
+    @shopping_list = ShoppingList.for_current_user(current_user.id).where(complete: false).first
+    items_to_remove = @shopping_list.shopping_list_ingredients.select {|sli| sli.recipe_ingredient.recipe_id == params[:recipe_id].to_i}
+    items_to_remove.each do |i|
+      i.destroy
+    end
+
+    respond_to do |format|
+      format.html do
+        redirect_to recipes_path
+      end
+      format.turbo_stream do
+
+      end
+    end
   end
 
   def destroy

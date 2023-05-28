@@ -34,15 +34,15 @@
 
   <div class="columns is-multiline">
     <% @user_recipes.each do |recipe| %>
-      <div class="column is-one-third-desktop">
+      <div class="column is-half-tablet is-one-third-desktop">
         <div class="card">
           <div class="card-content" style="position:relative">
 
             <% if recipe.user != current_user %>
               <span class="shared-text is-size-7">(From <%= recipe.user.email %>)</span>
             <% end %>
-            <p class="title">
-              <%= recipe.name %>
+            <p class="title is-size-6">
+              <%= recipe.name.truncate(35) %>
             </p>
             <p class="subtitle">
               <%= recipe.updated_at.strftime("%B %d, %Y") %>
@@ -62,16 +62,16 @@
               View
             </a>
             <% if !@used_recipes.include?(recipe.id) %>
-              <%= button_to 'Add to list', recipe_add_to_list_path(recipe.id), :form_class => "card-footer-item", method: :post %>
+                <%= link_to 'Add to list', recipe_add_to_list_path(recipe.id), data: { 'turbo-method': :post }, class: "card-footer-item", id: dom_id(recipe) %>
               <% else %>
-              <div class="card-footer-item">
+              <%= link_to recipe_remove_from_list_path(recipe.id), data: { 'turbo-method': :delete }, class: "card-footer-item", id: dom_id(recipe) do %>
                 <span class="icon-text has-text-success">
                   <span class="icon">
                     <i class="fas fa-check"></i>
                   </span>
                   <span>In list</span>
                 </span>
-              </div>
+                <% end %>
             <% end %>
           </footer>
         </div>

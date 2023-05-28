@@ -1,0 +1,19 @@
+<%= turbo_stream.replace dom_id(@recipe) do %>
+  <%= link_to 'Add to list', recipe_add_to_list_path(@recipe.id), data: { 'turbo-method': :post }, class: "card-footer-item", id: dom_id(@recipe) %>
+<% end %>
+
+<%= turbo_stream.update "flash" do %>
+  <div>
+    <script>
+        bulmaToast.toast({
+            message: 'Removed <%= @recipe.name %> from list',
+            dismissible: true,
+            type: 'is-danger',
+            animate: { in: 'fadeIn', out: 'fadeOut' },
+            position: 'top-center',
+            closeOnClick: true,
+            duration: 2000
+        })
+    </script>
+  </div>
+<% end %>
