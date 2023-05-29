@@ -2,6 +2,8 @@ require 'securerandom'
 
 class RecipesController < ApplicationController
   def index
+    @tags = RecipeTag.for_current_user_or_shared(current_user.id).pluck(:tag).uniq
+    @inbound_sharers = UserRecipesShare.where(accepted: true, recipient_id: current_user.id)
     @current_shopping_list = ShoppingList.for_current_user(current_user.id).where(complete: false).first
     if !@current_shopping_list.nil?
       @used_recipes = @current_shopping_list.shopping_list_ingredients.map {|i| i.recipe_ingredient.recipe_id }.uniq
@@ -15,19 +17,28 @@ class RecipesController < ApplicationController
     # where urs.accepted = true and urs.recipient_id = '845781420561498113');
 
 
-    @user_recipes = Recipe.for_current_user_or_shared(current_user.id).joins(:user).left_joins(:recipe_tags)
+    if params[:source]
+      if params[:source].has_key? "mine" and params[:source].keys.count == 1
+        @user_recipes = Recipe.for_current_user(current_user.id)
+      elsif !params[:source].has_key? "mine" and params[:source].keys.count > 0
+        @user_recipes = Recipe.shared_by(current_user.id, params[:source].keys)
+      else
+        @user_recipes = Recipe.for_current_user_or_shared_by(current_user.id, params[:source].keys)
+      end
+    else
+      @user_recipes = Recipe.for_current_user_or_shared(current_user.id)
+    end
+    @user_recipes = @user_recipes.joins(:user).left_joins(:recipe_tags)
+
     if params[:search]
       search_string = params[:search].downcase
-      search_terms = search_string.split(",")
-      tags,search_words = search_terms.partition { |word| word.match? /tag:[a-zA-Z]+/ }
-      tags_values = tags.map { |t| t.split(":")[1] }
-      search_string = search_words.join(" ").strip!
-      if tags_values.any?
-        @user_recipes = @user_recipes.where('lower(recipe_tags.tag) in (?)', tags_values)
-      end
       unless search_string.blank?
         @user_recipes = @user_recipes.where("lower(name) LIKE :prefix", prefix: "#{search_string}%")
       end
+    end
+
+    if params[:tags]
+      @user_recipes = @user_recipes.where('recipe_tags.tag in (?)', params[:tags].keys)
     end
   end
 

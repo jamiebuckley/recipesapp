@@ -11,6 +11,9 @@ document.addEventListener('turbo:load', () => {
         return;
     }
 
-    const app = createApp(ShoppingList)
+    const share_code = window.share_code;
+    const app = createApp(ShoppingList, {
+        shareCode: share_code
+    })
     app.mount('#shopping_list');
 })

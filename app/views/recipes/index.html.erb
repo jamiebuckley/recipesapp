@@ -1,91 +1,122 @@
-<%= form_for(recipes_path, method: :get) do |form| %>
 <div class="container p-2">
-  <div class="field has-addons is-hidden-touch">
-    <div class="control has-icons-left is-expanded">
-      <input class="input is-fullwidth is-large" type="text" name="search" value="<%= @search_term %>">
-      <span class="icon is-left">
-        <i class="fas fa-search"></i>
-      </span>
+
+<%= form_for(recipes_path, method: :get) do |form| %>
+  <div class="searchArea" data-controller="search">
+    <div class="field has-addons mb-2">
+      <div class="control is-expanded-touch">
+        <input class="input is-large" type="text" name="search" placeholder="Search recipes..." size="50" value="<%= @search_term %>">
+      </div>
+      <div class="control">
+        <button class="button is-primary is-large">
+            <span class="icon is-small">
+            <i class="fas fa-search"></i>
+          </span>
+          <span class="is-hidden-touch">Search</span>
+        </button>
+      </div>
+      <div class="control">
+        <a class="button is-large" data-action="search#toggle" >
+          <span class="icon is-small">
+            <i class="fas fa-cog"></i>
+          </span>
+          <span class="is-hidden-touch">Advanced</span>
+        </a>
+      </div>
     </div>
-    <div class="control">
-      <button class="button is-primary is-large">
-        Search
-      </button>
+    <div class="searchTags box mb-2" data-search-target="searchbox" style="display: none;">
+      <div class="title is-size-6">Advanced search options</div>
+      <div>
+        <% @tags.each do |tag| %>
+          <label class="checkbox mr-2">
+            <input type="checkbox"
+                   name="tags[<%= tag %>]"
+                   data-search-target="tagsCheckboxes"
+                   data-action="search#tag_change"
+                   data-search-tag-param="<%= tag %>">
+            <%= tag %>
+          </label>
+        <% end %>
+      </div>
+      <hr/>
+      <div>
+        <label class="checkbox mr-2">
+          <input type="checkbox" name="source[mine]"
+                 data-search-target="sourceCheckboxes"
+                 data-action="search#source_change"
+                 data-search-source-param="mine">
+          Mine
+        </label>
+        <% @inbound_sharers.each do |sharer| %>
+          <label class="checkbox mr-2">
+            <input type="checkbox" name="source[<%= sharer.owner_id %>]"
+                   data-search-target="sourceCheckboxes"
+                   data-action="search#source_change"
+                   data-search-source-param="<%= sharer.owner_id %>">
+            <%= sharer.owner.email %>
+          </label>
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>
 
-  <%= form_for(recipes_path, method: :get) do |form| %>
-    <div class="field has-addons is-hidden-desktop">
-      <div class="control has-icons-left">
-        <input class="input" type="text" name="search"  value="<%= @search_term %>">
-        <span class="icon is-left">
-          <i class="fas fa-search"></i>
-        </span>
-      </div>
-      <div class="control">
-        <button class="button is-primary">
-          Search
-        </button>
-      </div>
-    </div>
-  <% end %>
 
+<div class="columns is-multiline">
+  <% @user_recipes.each do |recipe| %>
+    <div class="column is-half-tablet is-one-third-desktop">
+      <div class="card">
+        <div class="card-content" style="position:relative">
 
-  <div class="columns is-multiline">
-    <% @user_recipes.each do |recipe| %>
-      <div class="column is-half-tablet is-one-third-desktop">
-        <div class="card">
-          <div class="card-content" style="position:relative">
+          <% if recipe.user != current_user %>
+            <span class="shared-text is-size-7">(From <%= recipe.user.email %>)</span>
+          <% end %>
+          <p class="title is-size-6">
+            <%= recipe.name.truncate(35) %>
 
-            <% if recipe.user != current_user %>
-              <span class="shared-text is-size-7">(From <%= recipe.user.email %>)</span>
-            <% end %>
-            <p class="title is-size-6">
-              <%= recipe.name.truncate(35) %>
-
-              <% recipe.recipe_tags.each do |recipe_tag| %>
+            <% recipe.recipe_tags.each do |recipe_tag| %>
                 <span class="tag">
                   <%= recipe_tag.tag %>
                 </span>
-              <% end %>
-            </p>
-            <p class="subtitle">
-              <%= recipe.updated_at.strftime("%B %d, %Y") %>
-            </p>
-          </div>
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <% if recipe.image.attached? %>
-                <%= image_tag recipe.image, style: "object-fit: cover;" %>
-                <% else %>
-                <img src="/neptune-placeholder-48.jpg"/>
-              <% end %>
-            </figure>
-          </div>
-          <footer class="card-footer">
-            <a href="<%= recipe_path(id: recipe.id) %>" class="card-footer-item">
-              View
-            </a>
-            <% if !@used_recipes.include?(recipe.id) %>
-                <%= link_to 'Add to list', recipe_add_to_list_path(recipe.id), data: { 'turbo-method': :post }, class: "card-footer-item", id: dom_id(recipe) %>
-              <% else %>
-              <%= link_to recipe_remove_from_list_path(recipe.id), data: { 'turbo-method': :delete }, class: "card-footer-item", id: dom_id(recipe) do %>
+            <% end %>
+          </p>
+          <p class="subtitle">
+            <%= recipe.updated_at.strftime("%B %d, %Y") %>
+          </p>
+        </div>
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <% if recipe.image.attached? %>
+              <%= image_tag recipe.image, style: "object-fit: cover;" %>
+            <% else %>
+              <img src="/neptune-placeholder-48.jpg"/>
+            <% end %>
+          </figure>
+        </div>
+        <footer class="card-footer">
+          <a href="<%= recipe_path(id: recipe.id) %>" class="card-footer-item">
+            View
+          </a>
+          <% if !@used_recipes.include?(recipe.id) %>
+            <%= link_to 'Add to list', recipe_add_to_list_path(recipe.id), data: { 'turbo-method': :post }, class: "card-footer-item", id: dom_id(recipe) %>
+          <% else %>
+            <%= link_to recipe_remove_from_list_path(recipe.id), data: { 'turbo-method': :delete }, class: "card-footer-item", id: dom_id(recipe) do %>
                 <span class="icon-text has-text-success">
                   <span class="icon">
                     <i class="fas fa-check"></i>
                   </span>
                   <span>In list</span>
                 </span>
-                <% end %>
             <% end %>
-          </footer>
-        </div>
+          <% end %>
+        </footer>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
-  <a href="<%= new_recipe_path %>" class="button is-floating is-primary">
-    <i class="fas fa-add"></i>
-  </a>
+  <div class="is-hidden-desktop" style="min-height:100px"></div>
+</div>
+
+<a href="<%= new_recipe_path %>" class="button is-floating is-primary">
+  <i class="fas fa-add"></i>
+</a>
 </div>

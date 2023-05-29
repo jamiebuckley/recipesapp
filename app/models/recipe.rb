@@ -16,6 +16,8 @@ class Recipe < ApplicationRecord
 
   scope :for_current_user, ->(user_id) { where(user_id: user_id) }
   scope :for_current_user_or_shared, -> (user_id) { where(user_id: user_id).or(where(user_id: UserRecipesShare.where(accepted: true, recipient_id: user_id).select("owner_id")))}
+  scope :for_current_user_or_shared_by, -> (user_id, sharer_ids) { where(user_id: user_id).or(where(user_id: UserRecipesShare.where(accepted: true, recipient_id: user_id, owner_id: sharer_ids).select("owner_id")))}
+  scope :shared_by, -> (user_id, sharer_ids) { where(user_id: UserRecipesShare.where(accepted: true, recipient_id: user_id, owner_id: sharer_ids).select("owner_id"))}
 
   has_one_attached :image
 end

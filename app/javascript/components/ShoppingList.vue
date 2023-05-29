@@ -1,5 +1,13 @@
 <template>
   <div class="container p-2">
+    <div class="is-pulled-left">
+      <div>
+        <a class="is-pulled-left" :href="'whatsapp://send?text=Hey there, here is the shopping list ' + this.shareCode" data-action="share/whatsapp/share">
+        <img width="150" src="/whatsapp-share-button.png"/>
+        </a>
+      </div>
+    </div>
+
     <div class="mb-4 is-clearfix">
       <button class="button is-danger is-pulled-right" @click="deleteModalShown = true">
         Complete List
@@ -84,6 +92,9 @@
 
 <script>
 export default {
+  props: {
+    shareCode: String
+  },
   data() {
     return {
       shopping_list_items: {},
