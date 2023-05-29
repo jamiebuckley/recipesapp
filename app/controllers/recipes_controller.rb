@@ -40,6 +40,8 @@ class RecipesController < ApplicationController
     if params[:tags]
       @user_recipes = @user_recipes.where('recipe_tags.tag in (?)', params[:tags].keys)
     end
+
+    @user_recipes = @user_recipes.uniq
   end
 
   def new
