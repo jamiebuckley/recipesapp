@@ -1,5 +1,8 @@
 <script>
-  window.share_code = "<%= shopping_list_by_code_url(@shopping_list.share_code) %>";
+  <% unless @shopping_list.nil? %>
+    window.share_url = "<%= shopping_list_by_code_url(@shopping_list.share_code) %>";
+    window.share_code = "<%= @shopping_list.share_code %>";
+  <% end %>
 </script>
 <div class="container p-2 pb-4 is-clearfix" id="static_data">
 

@@ -2,7 +2,7 @@
   <div class="container p-2">
     <div class="is-pulled-left">
       <div>
-        <a class="is-pulled-left" :href="'whatsapp://send?text=Hey there, here is the shopping list ' + this.shareCode" data-action="share/whatsapp/share">
+        <a class="is-pulled-left" :href="'whatsapp://send?text=Hey there, here is the shopping list ' + this.shareUrl" data-action="share/whatsapp/share">
         <img width="150" src="/whatsapp-share-button.png"/>
         </a>
       </div>
@@ -93,7 +93,8 @@
 <script>
 export default {
   props: {
-    shareCode: String
+    shareCode: String,
+    shareUrl: String
   },
   data() {
     return {
@@ -150,10 +151,10 @@ export default {
   },
   created() {
     const options = {
-      headers: {"Content-Type": "application/json"}
+      headers: {"Content-Type": "application/json", "Accept": "application/json"},
     };
 
-    fetch("/shopping_lists.json", options)
+    fetch("/shopping_lists/" + this.shareCode, options)
         .then(response => response.json())
         .then(data => {
           this.shopping_list_items = data;

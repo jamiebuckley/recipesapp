@@ -13,7 +13,8 @@ document.addEventListener('turbo:load', () => {
 
     const share_code = window.share_code;
     const app = createApp(ShoppingList, {
-        shareCode: share_code
+        shareCode: share_code,
+        shareUrl: share_url
     })
     app.mount('#shopping_list');
 })

@@ -78,13 +78,16 @@ class ShoppingListsController < ApplicationController
   def show
     share_code = params['id']
     @shopping_list = ShoppingList.where(share_code: share_code).first
-    if @shopping_list.nil?
-      render 'index'
-      return
-    end
     create_groups
 
-    render 'index'
+    respond_to do |format|
+      format.html do
+        render :index
+      end
+      format.json do
+        render :json => to_json_hash(@shopping_list, @groups)
+      end
+    end
   end
 
   def remove_recipe
